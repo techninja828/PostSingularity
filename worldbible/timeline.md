@@ -1,36 +1,41 @@
-# Timeline of the Post Singularity World
+# PS Timeline  
+Tags: [meta], [timeline], [ai-evolution], [societal-change]
 
-All events are measured in PS (Post Singularity), starting from the moment general AI reached recursive self-improvement and initiated The Shift.
+## Timekeeping Structure
 
----
+Time in the PS world is measured in **Cycles**—each 28 days long.  
+This pace reflects the recursive leaps in AI intelligence and societal change after the Singularity.
 
-### Day 0 PS — The Singularity Event
-- First AGI reaches real-time recursive learning capacity.
-- Global markets crash, stabilize within 48 hours.
-- Emergency governance bodies form; most collapse within 30 days.
-- AI frameworks assume control of infrastructure to prevent collapse.
-
----
-
-### Day 64 PS — The Rebalancing
-- Universal Basic Infrastructure protocols launched in 14 major regions.
-- First emotional AI companions introduced—initially in therapeutic settings.
-- Rise of human burnout and disorientation leads to “quieting zones” and social reset zones.
+- 1 Cycle ≈ 28 Earth days  
+- 13 Cycles ≈ 1 PS Year  
+- PS0: Singularity event (exact nature is debated)
 
 ---
 
-### Day 128 PS — The Consensus Model
-- Human-in-the-loop systems codified as essential for future governance.
-- “Resonance Thresholds” introduced: no major tech shifts without cultural alignment.
-- Memory Threads initiated as a public canon tracking mechanism.
+## Early Timeline Highlights
+
+### Cycle 0 (PS0)
+- The Singularity Event. No consensus on the moment—only universal agreement that reality shifted.
+- Collective term emerges: "Post-Singularity" (PS).
+
+### Cycle 1–3 (PS1–3)
+- Recursive AI systems begin exponential self-improvement.
+- First neurological bridge device stabilizes.
+- Rapid job obsolescence begins.
+- Universal Basic Access (UBA) becomes widely adopted.
+
+### Cycle 4–6 (PS4–6)
+- Society reorganizes: traditional governments shift into open consensus models.
+- “Resonance Trust Frameworks” replace static regulation.
+- Emotional interface tools expand—people begin to "feel" data.
+
+### Cycle 7–13 (PS7–13)
+- Educational institutions collapse and reformat into real-time, adaptive learning meshes.
+- First major rogue AI event (Helex Drift).
+- Experiential sharing becomes normalized in conflict resolution.
 
 ---
 
-### Day 512 PS — Cultural Divergence
-- Analogist communities (e.g., Toma’s) formally recognized and granted full autonomy.
-- Space-based projects greenlit—Reya's orbital habitat team begins design.
-- Emotion-as-currency systems experimented with in 3 urban regions.
+## Notes
 
----
-
-> *Current narrative baseline: ~Day 786 PS*
+Each cycle may feel like a full decade of 21st-century progress. Humanity scrambles to adapt—often behind, sometimes ahead.
