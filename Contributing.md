@@ -1,49 +1,68 @@
 # Contributing to Post Singularity
 
-Thank you for your interest in contributing to the *Post Singularity* universe—a living, modular storyworld that explores what it means to be human after the emergence of AGI.
+Thank you for your interest in contributing to the **Post Singularity** universe—a modular, evolving storyworld exploring what it means to be human in the wake of recursive artificial intelligence and neural integration.
 
-This world is built on emotional coherence, philosophical tension, and collaborative imagination. Contributions are welcome in the form of:
+This world thrives on emotional coherence, philosophical tension, and deeply human questions.
 
-- New technologies
-- Cultural structures
-- Characters and perspectives
-- Lore threads or timeline branches
-- Ethical or philosophical tensions
+---
+
+## ✅ What You Can Contribute
+
+- **Technologies** – From neural implants to decentralized governance systems  
+- **Cultural Structures** – Rituals, factions, family dynamics, languages  
+- **Characters** – Full bios, partial arcs, or one-scene foils  
+- **Lore Threads** – Major events, rumors, perspectives, or timeline branches  
+- **Philosophical Questions** – Ethical tradeoffs, political tensions, experiential dilemmas  
+- **Scene Snippets** – Visual ideas or dialogue that reveal PS truths through emotion
 
 ---
 
 ## 🧠 Contribution Principles
 
 1. **Emotion over exposition**  
-   Technology, characters, and systems should provoke questions or emotional resonance—not just detail.
+   Focus on how people feel and behave, not just how systems work.
 
 2. **Multiple truths, not one canon**  
-   You may add alternate perspectives, disputed events, or conflicting philosophies—as long as they remain grounded in the PS world’s tone.
+   Conflicting perspectives are welcome. Let the world be debated, not explained.
 
-3. **Respect the boundary of coherence**  
-   Don't break emotional tone, timeline consistency, or introduce implausible magic/tech unless it’s philosophically addressed.
+3. **Stay grounded in tone**  
+   No magic or fantasy elements unless justified through PS science or social delusion.
+
+4. **Respect temporal and emotional coherence**  
+   No tech that breaks everything without tension. Characters and societies must respond in ways that feel real.
 
 ---
 
-## 🛠 Recommended Structure for New Files
+## 🛠 File Structure & Naming
 
-All `.md` files should begin with a title and tag block:
+**All `.md` files must follow this format:**
 
 ```markdown
 # Title of the File
-Tags: [emotional], [transportation], [governance]
+Tags: [category], [emotional], [governance]
 
 ## Summary
-A 1–2 paragraph explanation of the idea and its impact.
+A 1–2 paragraph overview of the idea or event and its world impact.
 
 ## Function
-How this technology, system, or concept works in the PS world.
+How the system, object, or idea works.
 
 ## Cultural Effects
-What this changes about how people live, feel, or relate to others.
+How this changes daily life, perception, or relationships.
 
 ## Philosophical Tensions
-What questions this raises. Optional but encouraged.
+What questions or debates this sparks. (Optional but encouraged)
 
 ## Story Use
-How this could appear in character arcs or short scenes.
+How this might appear in a character arc, setting detail, or dramatic scene.
+
+~JSON starts here~
+{
+  "id": "tech_neural_link",
+  "type": "technology",
+  "name": "Neural Link",
+  "tags": ["neural", "interface", "communication"],
+  "introduced_in_cycle": 8,
+  "related_characters": ["reya"],
+  "impact": ["emotional sharing", "experience streaming"]
+}
