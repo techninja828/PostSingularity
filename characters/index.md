@@ -14,7 +14,7 @@ By highlighting multiple viewpoints, the roster encourages stories that explore 
 Which voices define progress—those who embrace AI partnership or those who resist it?
 
 ## Story Use
-Use this index to select a point-of-view or to introduce new characters that interact with Kai, Reya, Toma, and Mara.
+Use this index to select a point-of-view or to introduce new characters that interact with Kai, Reya, Toma, Mara, and Arin.
 
 ```json
 {
@@ -23,7 +23,7 @@ Use this index to select a point-of-view or to introduce new characters that int
   "name": "Character Index",
   "tags": ["index", "characters"],
   "introduced_in_cycle": 0,
-  "related_characters": ["kai", "reya", "toma", "mara"],
+  "related_characters": ["kai", "reya", "toma", "mara", "arin"],
   "impact": ["entry point", "story planning"]
 }
 ```
