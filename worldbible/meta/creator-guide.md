@@ -16,7 +16,7 @@ How strictly should collaborative worlds enforce style and canon versus encourag
 ## Story Use
 Use this guide when proposing new arcs or media; reference the timelines and character files to stay grounded.
 
-~JSON starts here~
+```json
 {
   "id": "meta_creator_guide",
   "type": "meta",
@@ -26,3 +26,4 @@ Use this guide when proposing new arcs or media; reference the timelines and cha
   "related_characters": [],
   "impact": ["consistent contributions"]
 }
+```

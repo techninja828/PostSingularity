@@ -16,7 +16,7 @@ Do isolated fragments distort the larger narrative or invite richer interpretati
 ## Story Use
 Select or remix snippets when crafting new chapters or multimedia pieces.
 
-~JSON starts here~
+```json
 {
   "id": "meta_lore_snippets",
   "type": "meta",
@@ -26,3 +26,4 @@ Select or remix snippets when crafting new chapters or multimedia pieces.
   "related_characters": [],
   "impact": ["quick references"]
 }
+```

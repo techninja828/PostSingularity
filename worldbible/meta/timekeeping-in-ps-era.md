@@ -16,7 +16,7 @@ Is a symbolic clock enough to orient society, or does the lack of a single origi
 ## Story Use
 Writers can mark events by Cycle to convey the accelerated pace of change or highlight disagreements about time.
 
-~JSON starts here~
+```json
 {
   "id": "meta_timekeeping",
   "type": "meta",
@@ -26,3 +26,4 @@ Writers can mark events by Cycle to convey the accelerated pace of change or hig
   "related_characters": [],
   "impact": ["shared rhythm", "ongoing debate"]
 }
+```

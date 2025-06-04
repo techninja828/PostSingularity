@@ -28,7 +28,7 @@ These fleets replaced most manual shipping, enabling rapid response to crises an
 - A festival honors the first manual courier who guided early drone AI.
 - Toma's enclave disrupts drone paths to enforce privacy boundaries.
 
-~JSON starts here~
+```json
 {
   "id": "tech_drone_logistics",
   "type": "technology",
@@ -38,3 +38,4 @@ These fleets replaced most manual shipping, enabling rapid response to crises an
   "related_characters": ["kai", "toma"],
   "impact": ["rapid delivery", "resource equity"]
 }
+```

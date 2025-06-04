@@ -28,7 +28,7 @@ Energy is treated as a shared commons. Communities negotiate emotional and cultu
 - Reya powers a massive experiment by pooling micro-grid donations from allies.
 - A blackout caused by sabotage challenges the belief in perpetual abundance.
 
-~JSON starts here~
+```json
 {
   "id": "tech_energy_systems",
   "type": "technology",
@@ -38,3 +38,4 @@ Energy is treated as a shared commons. Communities negotiate emotional and cultu
   "related_characters": ["mara", "reya"],
   "impact": ["abundant power", "ecological debates"]
 }
+```

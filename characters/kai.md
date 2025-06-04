@@ -16,7 +16,7 @@ They wrestle with surrendering control, relearning how to lead humans, and letti
 ## Story Use
 Kai mediates between factions, sometimes disabling their agent to face conflict unfiltered.
 
-~JSON starts here~
+```json
 {
   "id": "char_kai",
   "type": "character",
@@ -26,3 +26,4 @@ Kai mediates between factions, sometimes disabling their agent to face conflict 
   "related_characters": ["reya", "toma"],
   "impact": ["ecosystem rebuilding", "emotional leadership"]
 }
+```

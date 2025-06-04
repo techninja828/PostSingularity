@@ -28,7 +28,7 @@ These systems are heavily regulated by community emotional agreements. Access is
 - A rogue replication file threatens to flood the market with dangerous nanotech.
 - Community councils pause replicator access during a cultural mourning period.
 
-~JSON starts here~
+```json
 {
   "id": "tech_replication_systems",
   "type": "technology",
@@ -38,3 +38,4 @@ These systems are heavily regulated by community emotional agreements. Access is
   "related_characters": ["reya"],
   "impact": ["post-scarcity", "cultural rituals"]
 }
+```

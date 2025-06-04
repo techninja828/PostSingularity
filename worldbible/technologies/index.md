@@ -16,7 +16,7 @@ Who decides whether a technology is emotionally aligned enough to survive?
 ## Story Use
 Creators use this index to navigate the tech stack and locate philosophical dilemmas for plot hooks.
 
-~JSON starts here~
+```json
 {
   "id": "tech_index",
   "type": "reference",
@@ -26,3 +26,4 @@ Creators use this index to navigate the tech stack and locate philosophical dile
   "related_characters": [],
   "impact": ["navigation", "theme grouping"]
 }
+```

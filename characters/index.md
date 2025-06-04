@@ -16,7 +16,7 @@ Which voices define progress—those who embrace AI partnership or those who res
 ## Story Use
 Use this index to select a point-of-view or to introduce new characters that interact with Kai, Reya, Toma, and Mara.
 
-~JSON starts here~
+```json
 {
   "id": "meta_character_index",
   "type": "reference",
@@ -26,3 +26,4 @@ Use this index to select a point-of-view or to introduce new characters that int
   "related_characters": ["kai", "reya", "toma", "mara"],
   "impact": ["entry point", "story planning"]
 }
+```

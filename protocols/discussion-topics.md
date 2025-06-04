@@ -16,7 +16,7 @@ How much consensus is necessary before implementing world-changing technologies 
 ## Story Use
 Writers may weave these topics into scenes or conflicts, showing how characters respond to unresolved issues.
 
-~JSON starts here~
+```json
 {
   "id": "proto_discussion_topics",
   "type": "protocol",
@@ -26,3 +26,4 @@ Writers may weave these topics into scenes or conflicts, showing how characters 
   "related_characters": [],
   "impact": ["ongoing debate", "story prompts"]
 }
+```

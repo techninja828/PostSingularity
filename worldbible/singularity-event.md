@@ -16,7 +16,7 @@ Was it a benevolent intervention, a collapse of human systems, or something extr
 ## Story Use
 Characters may devote their lives to proving a specific theory, or ask AI agents for answers that never arrive.
 
-~JSON starts here~
+```json
 {
   "id": "wb_singularity_event",
   "type": "history",
@@ -26,3 +26,4 @@ Characters may devote their lives to proving a specific theory, or ask AI agents
   "related_characters": [],
   "impact": ["start of PS era", "ongoing debate"]
 }
+```

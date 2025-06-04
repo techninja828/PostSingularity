@@ -28,7 +28,7 @@ Stations are designed as emotional sanctuaries as much as engineering feats, fos
 - A mysterious signal from beyond the solar system tests the limits of communication relays.
 - Mara argues against mining a comet that holds spiritual significance for her community.
 
-~JSON starts here~
+```json
 {
   "id": "tech_aerospace_systems",
   "type": "technology",
@@ -38,3 +38,4 @@ Stations are designed as emotional sanctuaries as much as engineering feats, fos
   "related_characters": ["reya", "mara"],
   "impact": ["orbital habitats", "cosmic debates"]
 }
+```

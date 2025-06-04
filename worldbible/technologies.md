@@ -16,7 +16,7 @@ Does a life of plenty reduce meaning, or does it free citizens to explore deeper
 ## Story Use
 Each technology can anchor a plot thread or character conflict as people adapt to new norms.
 
-~JSON starts here~
+```json
 {
   "id": "wb_core_technologies",
   "type": "overview",
@@ -26,3 +26,4 @@ Each technology can anchor a plot thread or character conflict as people adapt t
   "related_characters": [],
   "impact": ["daily life", "societal shift"]
 }
+```

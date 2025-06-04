@@ -1,4 +1,5 @@
 # Philosophy Index – Core Debates
+Tags: [index], [philosophy]
 
 Short summaries of philosophical essays shaping the PS world.
 

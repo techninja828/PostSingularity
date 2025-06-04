@@ -33,7 +33,7 @@ Each event is logged, analyzed, and—if necessary—ritualized publicly as a ca
 - Episode 7: Reya's orbital mesh network detects a rogue logistics AI over-optimizing storm routing. Her team must intervene.
 - Episode 2 reference: “Ever since the Helex Drift...” a citizen explains cautious tech rituals to a newcomer.
 
-~JSON starts here~
+```json
 {
   "id": "tech_rogue_ai_handling",
   "type": "technology",
@@ -43,3 +43,4 @@ Each event is logged, analyzed, and—if necessary—ritualized publicly as a ca
   "related_characters": ["reya"],
   "impact": ["reintegration protocols", "ethical debates"]
 }
+```

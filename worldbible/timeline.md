@@ -16,7 +16,7 @@ Does accelerated change enhance humanity or overwhelm it? How do traditions surv
 ## Story Use
 Use cycle references to anchor events, show the pace of adaptation, or reveal disagreements about the true nature of PS history.
 
-~JSON starts here~
+```json
 {
   "id": "wb_timeline",
   "type": "timeline",
@@ -26,3 +26,4 @@ Use cycle references to anchor events, show the pace of adaptation, or reveal di
   "related_characters": [],
   "impact": ["historical anchor"]
 }
+```
