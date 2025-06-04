@@ -16,7 +16,7 @@ How much should emotional response dictate what becomes core canon versus branch
 ## Story Use
 Characters may reference or manipulate Memory Threads to influence public perception or preserve history.
 
-~JSON starts here~
+```json
 {
   "id": "proto_memory_threads",
   "type": "protocol",
@@ -26,3 +26,4 @@ Characters may reference or manipulate Memory Threads to influence public percep
   "related_characters": [],
   "impact": ["world building", "collective memory"]
 }
+```

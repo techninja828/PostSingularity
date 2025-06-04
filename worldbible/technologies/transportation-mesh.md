@@ -28,7 +28,7 @@ Routing algorithms take social gatherings, personal rhythms, and environmental i
 - Mara designs an off-grid branch for spiritual retreats in remote regions.
 - A protest blocks a major junction, testing community patience and governance.
 
-~JSON starts here~
+```json
 {
   "id": "tech_transportation_mesh",
   "type": "technology",
@@ -38,3 +38,4 @@ Routing algorithms take social gatherings, personal rhythms, and environmental i
   "related_characters": ["kai", "toma", "mara"],
   "impact": ["easy travel", "cultural blending"]
 }
+```

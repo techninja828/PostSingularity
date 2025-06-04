@@ -1,4 +1,5 @@
 # Scripts
+Tags: [meta], [scripts]
 
 This directory collects small utilities for working with the repository.
 

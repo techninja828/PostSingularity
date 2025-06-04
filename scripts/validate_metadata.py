@@ -7,8 +7,15 @@ Usage:
 The script recursively scans `.md` files under the given path (current
 working directory by default). Each file must contain either a line
 starting with ``tags:`` or a fenced code block beginning with
-````json```. Any file missing both will be listed and the program exits
-with status 1.
+````json```. JSON metadata blocks must use standard fenced code
+syntax:
+
+```json
+{ ... }
+```
+
+Any file missing both will be listed and the program exits with
+status 1.
 """
 
 import os

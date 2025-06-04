@@ -32,7 +32,7 @@ With neural links, AI agents, emotional feedback, and public Memory Threads, the
 - A citizen’s old memory thread resurfaces, triggering shame and social distortion  
 - Reya must choose whether to share a memory that could unify a project—or destabilize a relationship
 
-~JSON starts here~
+```json
 {
   "id": "tech_privacy_drift",
   "type": "technology",
@@ -42,3 +42,4 @@ With neural links, AI agents, emotional feedback, and public Memory Threads, the
   "related_characters": ["toma", "reya"],
   "impact": ["open data", "boundary debates"]
 }
+```

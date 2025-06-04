@@ -16,7 +16,7 @@ She clashes with Toma over automation and often questions whether humanity is re
 ## Story Use
 Reya must decide if AI or human pilots should guide her first off-world sanctuary.
 
-~JSON starts here~
+```json
 {
   "id": "char_reya",
   "type": "character",
@@ -26,3 +26,4 @@ Reya must decide if AI or human pilots should guide her first off-world sanctuar
   "related_characters": ["kai", "toma"],
   "impact": ["orbital habitats", "ethical expansion"]
 }
+```

@@ -33,7 +33,7 @@ Emotional feedback is seen as **a mirror**, not a control system.
 - A public decision gets delayed because emotional resonance in the chamber plummets during deliberation  
 - Toma refuses to wear feedback devices, relying on ancestral methods instead
 
-~JSON starts here~
+```json
 {
   "id": "tech_emotional_feedback",
   "type": "technology",
@@ -43,3 +43,4 @@ Emotional feedback is seen as **a mirror**, not a control system.
   "related_characters": ["mara", "toma"],
   "impact": ["self-awareness", "governance checks"]
 }
+```

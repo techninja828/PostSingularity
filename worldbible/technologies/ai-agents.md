@@ -39,7 +39,7 @@ They do **not** govern, command, or override without explicit consent—except i
 - Toma interacts with ambient agents only through ceremonial interfaces  
 - Some characters resist AI bonding altogether, creating tension in shared projects
 
-~JSON starts here~
+```json
 {
   "id": "tech_ai_agents",
   "type": "technology",
@@ -49,3 +49,4 @@ They do **not** govern, command, or override without explicit consent—except i
   "related_characters": ["kai", "reya", "toma"],
   "impact": ["collaborative partners", "identity questions"]
 }
+```

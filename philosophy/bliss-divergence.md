@@ -16,7 +16,7 @@ If perfect internal experience is available, does effort matter? Should society 
 ## Story Use
 Characters may contemplate or resist bliss exits, or confront the return of someone profoundly changed by bliss.
 
-~JSON starts here~
+```json
 {
   "id": "phil_bliss_divergence",
   "type": "philosophy",
@@ -26,3 +26,4 @@ Characters may contemplate or resist bliss exits, or confront the return of some
   "related_characters": [],
   "impact": ["voluntary bliss", "cultural split"]
 }
+```

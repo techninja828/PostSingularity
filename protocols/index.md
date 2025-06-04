@@ -1,4 +1,5 @@
 # Protocols Index – Community Documents
+Tags: [index], [protocols]
 
 These files outline how Post Singularity participants discuss and record their world.
 

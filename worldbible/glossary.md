@@ -16,7 +16,7 @@ How much do definitions shape behavior when meaning is constantly evolving?
 ## Story Use
 Use these terms to maintain consistency in dialogue, narration, or world documents.
 
-~JSON starts here~
+```json
 {
   "id": "wb_glossary",
   "type": "reference",
@@ -26,3 +26,4 @@ Use these terms to maintain consistency in dialogue, narration, or world documen
   "related_characters": [],
   "impact": ["shared language"]
 }
+```

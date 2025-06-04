@@ -39,7 +39,7 @@ They are safe, deeply personalized, and bound by **emotional regulation systems*
 - Kai struggles when their link malfunctions during an emotionally complex negotiation  
 - Some characters belong to a resistance group that believes neural links weaken the human spirit
 
-~JSON starts here~
+```json
 {
   "id": "tech_neural_links",
   "type": "technology",
@@ -49,3 +49,4 @@ They are safe, deeply personalized, and bound by **emotional regulation systems*
   "related_characters": ["reya", "kai"],
   "impact": ["shared reality", "identity shifts"]
 }
+```

@@ -56,7 +56,7 @@ What questions or debates this sparks. (Optional but encouraged)
 ## Story Use
 How this might appear in a character arc, setting detail, or dramatic scene.
 
-~JSON starts here~
+```json
 {
   "id": "tech_neural_link",
   "type": "technology",
@@ -66,3 +66,4 @@ How this might appear in a character arc, setting detail, or dramatic scene.
   "related_characters": ["reya"],
   "impact": ["emotional sharing", "experience streaming"]
 }
+```

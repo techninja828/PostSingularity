@@ -28,7 +28,7 @@ Communities in Oceanic Zones develop unique rituals tied to marine ecosystems an
 - A threatened species becomes central to negotiations between surface and sea communities.
 - Reya tests experimental sensors in a trench, uncovering evidence of ancient technology.
 
-~JSON starts here~
+```json
 {
   "id": "tech_oceanic_zones",
   "type": "technology",
@@ -38,3 +38,4 @@ Communities in Oceanic Zones develop unique rituals tied to marine ecosystems an
   "related_characters": ["toma", "reya"],
   "impact": ["undersea habitats", "conservation debates"]
 }
+```

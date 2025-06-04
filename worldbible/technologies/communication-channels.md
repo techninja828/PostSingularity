@@ -28,7 +28,7 @@ Usage is shaped by consent and emotional alignment; open channels foster intimac
 - Mara curates a Memory Thread performance to heal a divided community.
 - A character chooses total silence after being overwhelmed by channel noise.
 
-~JSON starts here~
+```json
 {
   "id": "tech_communication_channels",
   "type": "technology",
@@ -38,3 +38,4 @@ Usage is shaped by consent and emotional alignment; open channels foster intimac
   "related_characters": ["kai", "mara"],
   "impact": ["shared presence", "privacy debates"]
 }
+```

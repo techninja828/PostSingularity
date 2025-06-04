@@ -16,7 +16,7 @@ He questions whether technology can support life without hollowing it out, resis
 ## Story Use
 Toma often builds for those who once insulted him, demonstrating service and humility.
 
-~JSON starts here~
+```json
 {
   "id": "char_toma",
   "type": "character",
@@ -26,3 +26,4 @@ Toma often builds for those who once insulted him, demonstrating service and hum
   "related_characters": ["kai", "reya"],
   "impact": ["handmade living", "philosophical resistance"]
 }
+```
