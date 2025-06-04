@@ -16,21 +16,24 @@ Who decides whether a technology is emotionally aligned enough to survive?
 ## Story Use
 Creators use this index to navigate the tech stack and locate philosophical dilemmas for plot hooks.
 
-- [PS Technology Index](index.md)
-- [Aerospace Systems](aerospace-systems.md)
-- [AI Agents](ai-agents.md)
-- [Communication Channels](communication-channels.md)
-- [Drone Logistics](drone-logistics.md)
-- [Emotional Feedback Systems](emotional-feedback.md)
-- [Energy Systems](energy-systems.md)
-- [Governance Systems](governance-systems.md)
-- [Neural Links](neural-links.md)
-- [Oceanic Zones](oceanic-zones.md)
-- [Privacy Drift](privacy-drift.md)
-- [Replication Systems](replication-systems.md)
-- [Rogue AI Handling](rogue-ai-handling.md)
-- [Transportation Mesh](transportation-mesh.md)
-- [Trust Fabrics](trust-fabrics.md)
+### Technology Files
+
+Below are links to each technology document:
+
+- [Aerospace Systems](./aerospace-systems.md)
+- [AI Agents](./ai-agents.md)
+- [Communication Channels](./communication-channels.md)
+- [Drone Logistics](./drone-logistics.md)
+- [Emotional Feedback Systems](./emotional-feedback.md)
+- [Energy Systems](./energy-systems.md)
+- [Governance Systems](./governance-systems.md)
+- [Neural Links](./neural-links.md)
+- [Oceanic Zones](./oceanic-zones.md)
+- [Privacy Drift](./privacy-drift.md)
+- [Replication Systems](./replication-systems.md)
+- [Rogue AI Handling](./rogue-ai-handling.md)
+- [Transportation Mesh](./transportation-mesh.md)
+- [Trust Fabrics](./trust-fabrics.md)
 
 ```json
 {
