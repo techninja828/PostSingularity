@@ -15,3 +15,9 @@ This repo is the public world bible and expansion platform. It includes:
 - 🎬 Animation and narrative arc proposals
 
 Welcome to the world **after intelligence exploded**
+
+## Reference
+
+- [Philosophy Index](philosophy/index.md)
+- [Protocols Index](protocols/index.md)
+
