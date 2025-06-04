@@ -23,6 +23,7 @@ Welcome to the world **after intelligence exploded**
 - [Philosophy Index](philosophy/index.md)
 - [Protocols Index](protocols/index.md)
 - [Location Index](locations/index.md)
+- [Meta Guides Index](worldbible/meta/index.md)
 
 ## How to Contribute
 
