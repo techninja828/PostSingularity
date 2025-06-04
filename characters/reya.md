@@ -1,18 +1,28 @@
 # Reya – The Engineer
+Tags: [character], [innovation], [exploration]
 
-**Role:** Visionary systems builder. Oversees orbital habitat design, climate modulating drones, and next-gen mobility systems.
+## Summary
+A visionary systems builder, Reya designs orbital habitats, climate-modulating drones, and next-generation mobility systems.
 
-**Beliefs:**  
-- Expansion is not escape—it’s sacred stewardship.  
-- We owe it to the cosmos to bring an emotionally intelligent species forward.  
-- Feeling is a form of data. It belongs in engineering.
+## Function
+Reya integrates emotional data into engineering choices, balancing expansion with sacred stewardship of the cosmos.
 
-**Conflicts:**  
-- Clashes with Toma over ethics of automation  
-- Feels isolated—AI is an incredible collaborator, but not a substitute for awe  
-- Wants to believe we’re ready to go beyond Earth—but sometimes doubts it
+## Cultural Effects
+Her projects influence off-world settlements and push society toward empathic exploration beyond Earth.
 
-**Narrative Arc Ideas:**  
-- Prepares humanity’s first off-world sanctuary  
-- Must make a call that affects whether AI or human nervous systems pilot the mission  
-- Learns to embed poetic elements (not just systems) into her design
+## Philosophical Tensions
+She clashes with Toma over automation and often questions whether humanity is ready to venture beyond Earth.
+
+## Story Use
+Reya must decide if AI or human pilots should guide her first off-world sanctuary.
+
+~JSON starts here~
+{
+  "id": "char_reya",
+  "type": "character",
+  "name": "Reya",
+  "tags": ["innovation", "exploration"],
+  "introduced_in_cycle": 1,
+  "related_characters": ["kai", "toma"],
+  "impact": ["orbital habitats", "ethical expansion"]
+}

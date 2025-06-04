@@ -1,23 +1,28 @@
 # Glossary of Key Terms
+Tags: [reference], [glossary]
 
-**PS (Post Singularity):**  
-The new calendar system. Time is counted from Day 0 PS—the moment AGI reached recursive improvement.
+## Summary
+A quick-reference guide to terms used throughout the PS universe.
 
-**Resonance Threshold:**  
-The emotional/cultural alignment score required before major tech shifts are implemented.
+## Function
+Defines core concepts such as PS Cycles, Resonance Thresholds, Memory Threads, Blind Cycles, Agents, Quieting Zones, and Analogists.
 
-**Memory Thread:**  
-Canonical narrative strands tracked by AI and human communities. Conflicting threads may exist, but only one is considered "core" at any given time.
+## Cultural Effects
+Shared language helps communities align around technology and emotional practices.
 
-**Blind Cycle:**  
-Voluntary period where citizens live without AI input—used for reflection, reintegration, or coming-of-age rites.
+## Philosophical Tensions
+How much do definitions shape behavior when meaning is constantly evolving?
 
-**Agent:**  
-AI companions that assist with projects, emotion tracking, life design, and interpersonal growth.
+## Story Use
+Use these terms to maintain consistency in dialogue, narration, or world documents.
 
-**Quieting Zone:**  
-Spaces designed to help overwhelmed citizens reduce input and reintegrate emotionally—no AI guidance allowed.
-
-**Analogist:**  
-A citizen who rejects most AI tools, preferring tactile, slow, or traditional lifestyles. Seen as cultural stewards, not technophobes.
-
+~JSON starts here~
+{
+  "id": "wb_glossary",
+  "type": "reference",
+  "name": "Glossary",
+  "tags": ["glossary"],
+  "introduced_in_cycle": 0,
+  "related_characters": [],
+  "impact": ["shared language"]
+}

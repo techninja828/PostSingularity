@@ -32,3 +32,14 @@ Emotional feedback is seen as **a mirror**, not a control system.
 - Mara teaches a group how to use biofeedback to navigate grief without words  
 - A public decision gets delayed because emotional resonance in the chamber plummets during deliberation  
 - Toma refuses to wear feedback devices, relying on ancestral methods instead
+
+~JSON starts here~
+{
+  "id": "tech_emotional_feedback",
+  "type": "technology",
+  "name": "Emotional Feedback Systems",
+  "tags": ["emotional", "identity"],
+  "introduced_in_cycle": 2,
+  "related_characters": ["mara", "toma"],
+  "impact": ["self-awareness", "governance checks"]
+}
