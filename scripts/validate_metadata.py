@@ -5,16 +5,15 @@ Usage:
     python validate_metadata.py [path]
 
 The script recursively scans `.md` files under the given path (current
-working directory by default). Each file must contain either a line
-starting with ``tags:`` or a fenced code block beginning with
-````json```. JSON metadata blocks must use standard fenced code
-syntax:
+working directory by default). Each file must contain **both** a line
+starting with ``Tags:`` and a fenced code block beginning with
+````json```. JSON metadata blocks must use standard fenced code syntax:
 
 ```json
 { ... }
 ```
 
-Any file missing both will be listed and the program exits with
+Any file missing either requirement will be listed and the program exits with
 status 1.
 """
 
@@ -28,7 +27,8 @@ JSON_BLOCK_REGEX = re.compile(r'```json', re.IGNORECASE)
 
 
 def has_required_metadata(text: str) -> bool:
-    return bool(TAG_REGEX.search(text) or JSON_BLOCK_REGEX.search(text))
+    """Return True if text contains both a Tags line and a JSON block."""
+    return bool(TAG_REGEX.search(text)) and bool(JSON_BLOCK_REGEX.search(text))
 
 
 def check_file(path: str) -> bool:
@@ -57,12 +57,12 @@ def main():
     missing = [f for f in md_files if not check_file(f)]
 
     if missing:
-        print("Files missing metadata:")
+        print("Files missing required Tags line and JSON metadata block:")
         for f in missing:
             print(f"- {f}")
         sys.exit(1)
     else:
-        print("All markdown files contain required metadata.")
+        print("All markdown files contain both Tags line and JSON metadata block.")
 
 
 if __name__ == '__main__':
