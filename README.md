@@ -31,3 +31,15 @@ Markdown files should follow the template outlined there. Helpful starting
 points are the [Character Index](characters/index.md) and the
 [Technology Index](worldbible/technologies/index.md).
 
+
+```json
+{
+  "id": "ps_overview",
+  "type": "reference",
+  "name": "PostSingularity Repository",
+  "tags": ["overview"],
+  "introduced_in_cycle": 0,
+  "related_characters": [],
+  "impact": ["storyworld reference"]
+}
+```

@@ -12,3 +12,15 @@ python validate_metadata.py [path]
 ```
 
 If no path is provided, the current directory is scanned recursively.
+
+```json
+{
+  "id": "scripts_overview",
+  "type": "reference",
+  "name": "Scripts Directory",
+  "tags": ["scripts"],
+  "introduced_in_cycle": 0,
+  "related_characters": [],
+  "impact": ["utilities"]
+}
+```

@@ -10,3 +10,15 @@ These files outline how Post Singularity participants discuss and record their w
   Guidelines for tracking canonical events and branch histories.
 
 More protocols may be introduced as the universe expands.
+
+```json
+{
+  "id": "protocols_index",
+  "type": "reference",
+  "name": "Protocols Index",
+  "tags": ["protocols"],
+  "introduced_in_cycle": 0,
+  "related_characters": [],
+  "impact": ["collaboration"]
+}
+```
