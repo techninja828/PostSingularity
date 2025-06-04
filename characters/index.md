@@ -16,6 +16,14 @@ Which voices define progress—those who embrace AI partnership or those who res
 ## Story Use
 Use this index to select a point-of-view or to introduce new characters that interact with Kai, Reya, Toma, Mara, and Arin.
 
+### Character Links
+
+- [Kai](kai.md)
+- [Reya](reya.md)
+- [Toma](toma.md)
+- [Mara](mara.md)
+- [Arin](arin.md)
+
 ```json
 {
   "id": "meta_character_index",
