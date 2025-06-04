@@ -38,3 +38,11 @@ They are safe, deeply personalized, and bound by **emotional regulation systems*
 - Reya uses her link to simulate spacewalks before building orbital structures  
 - Kai struggles when their link malfunctions during an emotionally complex negotiation  
 - Some characters belong to a resistance group that believes neural links weaken the human spirit
+
+~JSON starts here~
+{
+  "id": "neural_links",
+  "type": "technology",
+  "name": "Neural Links",
+  "tags": ["sensory", "identity", "emotional", "communication", "energy"]
+}

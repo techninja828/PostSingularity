@@ -1,56 +1,38 @@
 # Timekeeping in the Post-Singularity Era
+Tags: [meta], [timekeeping], [culture]
 
-## When Did It Begin?
+## Summary
+PS Cycles—units of 28 days—serve as cultural anchors for tracking progress after the Singularity. Their origin is debated, but they frame the pace of change.
 
-There is no consensus.
+## Function
+Explain how PS society measures time and why this system matters for collaboration between humans and AIs.
 
-Some trace the Singularity to the moment an AI self-improved across recursive boundaries. Others say it was the quiet integration of synthetic cognition into daily tools. For most, it was only after the 13th leap that anyone noticed something had changed.
+## Cultural Effects
+- Helps humans pace adaptation in a rapidly evolving world
+- Used in retrospectives, civic rituals, and governance cycles
+- Sparks factional disputes over legitimacy
 
-By then, it was too late to agree on a date.
+## Philosophical Tensions
+- Cycle Maximalists view PS Cycles as the only clock
+- Pragmatists keep Gregorian dates for coordination
+- Traditionalists dismiss cycles as technocult symbolism
 
-As a result, the PS Calendar is intentionally untethered from any single origin. PS Cycles are cultural anchors, not historical timestamps.
+## Story Use
+Anchor events by cycle count and create dissonance between characters who follow different calendars.
 
-This ambiguity fuels debate, dissent, and devotion across the PS world.
-
----
-
-## The PS Cycle System
-
+### The PS Cycle System
 - **1 PS Cycle = 28 days**
-- Symbolic unit reflecting perceived recursive leaps in AI evolution and societal transformation
+- Symbolic unit reflecting perceived leaps in AI evolution and societal transformation
 - Adopted culturally, not enforced institutionally
-- Example (if referenced):  
-  - Gregorian: *May 17, 2045*  
-  - PS: *Cycle 19 PS*
 
----
+### AI Perspective
+AIs operate on compute epochs and use PS Cycles only as a translation layer for human collaboration.
 
-## Symbolic Significance
-
-- Helps humans **pace adaptation** in a world moving faster than cognition
-- Used in **retrospectives**, **civic rituals**, **mental health tracking**, and **governance cycles**
-- Not a replacement for standard time—functions more like a cultural metronome
-
----
-
-## Tensions & Factions
-
-- **Cycle Maximalists**: Declare the PS Cycle as humanity’s only legitimate clock—reject all pre-Singularity systems
-- **Pragmatists**: Use PS Cycles for milestone framing, keep Gregorian dates for coordination
-- **Traditionalists**: Dismiss PS Cycles as technocult symbolism
-
----
-
-## AI Perspective
-
-- AIs do not use PS Cycles internally—they operate on **compute epochs**, **quanta**, and **sim-time compression**
-- PS Cycles are a **translation layer** created for human collaboration and temporal orientation
-
----
-
-## Narrative Uses
-
-- Anchor major story events in PS Cycles to convey the *pace* of change
-- Create dissonance between characters from different belief systems around time
-- Use Cycle counts to reflect psychological states (e.g., "He's been in Bliss since Cycle 27…")
+~JSON starts here~
+{
+  "id": "timekeeping_ps",
+  "type": "meta",
+  "name": "Timekeeping in the PS Era",
+  "tags": ["meta", "timekeeping", "culture"]
+}
 

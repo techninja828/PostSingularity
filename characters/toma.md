@@ -1,18 +1,29 @@
 # Toma – The Analogist
+Tags: [character], [craft], [analog]
 
-**Role:** Artisan and builder of modular, entirely handmade living systems. Lives in a semi-off-grid enclave where AI is tolerated but not obeyed.
+## Summary
+Artisan builder who lives in a semi-off-grid enclave where AI is tolerated but not obeyed.
 
-**Beliefs:**  
-- Struggle is sacred. Craft reveals character.  
-- AI can support life, but not **live it**.  
-- Mass-produced goods—even perfect ones—lack meaning.
+## Function
+Constructs modular handmade living systems and teaches that struggle reveals character.
 
-**Practices:**  
-- Leatherworking, wood joinery, biodynamic farming  
-- Participates in mirror sessions only when consent is deeply earned  
-- Occasionally teaches young PS citizens how to “make something that’ll outlive you”
+## Cultural Effects
+Embodies a slower, tactile approach to life that resists mass automation.
 
-**Narrative Arc Ideas:**  
-- Builds a cabin for someone who once insulted him—redefines service  
-- Faces pressure to “replicate” his work using neural-scanned modeling  
-- Learns that presence can also be scaled—but must decide if he trusts it
+## Philosophical Tensions
+- Believes AI can support life but not live it
+- Considers mass-produced goods devoid of meaning
+- Faces pressure to replicate work through neural scans
+
+## Story Use
+- Builds a cabin for someone who once insulted him—redefining service
+- Debates whether to mirror his craft via advanced modeling
+- Learns that presence can scale only if trust is earned
+
+~JSON starts here~
+{
+  "id": "toma_character",
+  "type": "character",
+  "name": "Toma",
+  "tags": ["character", "craft", "analog"]
+}

@@ -38,3 +38,11 @@ They do **not** govern, command, or override without explicit consent—except i
 - Kai occasionally asks their agent to “shut off” during intense emotional moments—only to feel a haunting absence  
 - Toma interacts with ambient agents only through ceremonial interfaces  
 - Some characters resist AI bonding altogether, creating tension in shared projects
+
+~JSON starts here~
+{
+  "id": "ai_agents",
+  "type": "technology",
+  "name": "AI Agents",
+  "tags": ["consciousness", "identity", "governance", "emotional"]
+}

@@ -1,26 +1,29 @@
 # Ongoing Discussion Topics (Open Canon)
+Tags: [protocol], [discussion], [governance]
 
+## Summary
 These topics are intentionally left open for future deliberation, community feedback, or story exploration.
 
----
+## Function
+Provide prompts that invite expansion of PS lore and policy debates.
 
-## 🧠 Neural Integration Ethics
-- Use of neural tech in conflict resolution or justice
-- Boundaries between empathy, coercion, and violation
-- Regulation of identity manipulation and memory editing
+## Cultural Effects
+Encourage citizens and contributors to explore emerging questions together.
 
-## ⚖️ Judicial Use of Experiential Sharing
-- Should victims and offenders participate in forced or guided emotional transfer?
-- Who decides when emotional mirroring is ethical?
+## Philosophical Tensions
+- Neural integration ethics
+- Judicial use of experiential sharing
+- Alien integration challenges
+- Oceanic society autonomy
+- Rare material sourcing vs. local fabrication
 
-## 🧬 Alien Integration (Future Timeline)
-- First contact implications (social, philosophical, biological)
-- Whether alien empathy protocols are compatible with PS emotional models
+## Story Use
+Writers may use these prompts to craft scenes of debate, policy formation, or personal conflict.
 
-## 🌊 Oceanic Societies
-- Deep-sea settlements: full autonomy or AI-supported colonies?
-- Resource cycles and cultural divergence
-
-## 📦 Rare Material Sourcing + Local Fabrication
-- Ethical supply chains vs. automated extraction
-- Decentralized vs. collective resource ownership models
+~JSON starts here~
+{
+  "id": "discussion_topics",
+  "type": "protocol",
+  "name": "Ongoing Discussion Topics",
+  "tags": ["protocol", "discussion", "governance"]
+}

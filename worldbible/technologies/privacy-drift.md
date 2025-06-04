@@ -31,3 +31,11 @@ With neural links, AI agents, emotional feedback, and public Memory Threads, the
 - Toma’s enclave reinvents analog privacy—paper letters, wordless communication, masked emotions  
 - A citizen’s old memory thread resurfaces, triggering shame and social distortion  
 - Reya must choose whether to share a memory that could unify a project—or destabilize a relationship
+
+~JSON starts here~
+{
+  "id": "privacy_drift",
+  "type": "technology",
+  "name": "Privacy Drift",
+  "tags": ["privacy", "identity", "governance", "emotional", "communication"]
+}

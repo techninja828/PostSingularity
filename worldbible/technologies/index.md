@@ -1,57 +1,36 @@
 # PS Technology Index
+Tags: [meta], [technology], [overview]
 
-Technology in the Post Singularity world is not a tool—it’s an **extension of consciousness**.
+## Summary
+Technology in the Post Singularity world is an extension of consciousness. This index organizes key technologies by the human challenges they shape.
 
-After Day 0 PS, innovation accelerated beyond human comprehension. But instead of unchecked expansion, a new ethic emerged:  
-> **“Only the emotionally aligned shall persist.”**
+## Function
+Serve as a guide to more detailed files within the technologies directory.
 
-This index organizes key technologies in the PS world—not by hardware, but by the human challenges they shape: identity, trust, presence, and transformation.
+## Cultural Effects
+Highlights how innovation is filtered through emotional alignment rather than raw advancement.
 
----
+## Philosophical Tensions
+Only emotionally aligned creations persist, raising debates about who decides alignment.
 
-## 🔧 Core Technologies (by Theme)
+## Story Use
+Reference this index to locate specific tech documents when plotting scenes or world details.
 
-### 🧠 Emotion + Consciousness
-- [ai-agents.md](./ai-agents.md) — Companion intelligence as co-creators
-- [neural-links.md](./neural-links.md) — Direct nervous system interfacing
-- [emotional-feedback.md](./emotional-feedback.md) — Biofeedback, mood tracking, empathic mirrors
+### 🔧 Core Technologies (by Theme)
 
-### 🏗 Infrastructure + Autonomy
-- [replication-systems.md](./replication-systems.md) — On-demand goods and post-scarcity ethics
-- [drone-logistics.md](./drone-logistics.md) — Resource routing, rare material delivery
-- [energy-systems.md](./energy-systems.md) — Ambient, distributed, AI-managed
+*This section lists files categorized by theme.*
 
-### 🌐 Governance + Privacy
-- [privacy-drift.md](./privacy-drift.md) — Identity erosion, transparency culture
-- [communication-channels.md](./communication-channels.md) — Thoughtstreaming, collective presence
-- [trust-fabrics.md](./trust-fabrics.md) — Authenticity verification via affective signaling
+### 🏷 Tech Tag System (Flexible Themes)
 
-### 🚀 Mobility + Environment
-- [transportation-mesh.md](./transportation-mesh.md) — Post-vehicle mobility webs
-- [aerospace-systems.md](./aerospace-systems.md) — Orbital design, Mars seeding, cosmic ethics
-- [oceanic-zones.md](./oceanic-zones.md) — Deep sea societies and biosphere threading
-
----
-
-## 🏷 Tech Tag System (Flexible Themes)
-
-Use tags to cross-reference complex systems:
-
-- `[emotional]`  
-- `[identity]`  
-- `[communication]`  
-- `[transportation]`  
-- `[governance]`  
-- `[energy]`  
-- `[environment]`
-
----
+Use tags to cross-reference complex systems such as `[emotional]`, `[identity]`, `[governance]`, and more.
 
 ## Contributions
+Each technology file contains a technical overview and a philosophical dilemma. Fork the repo and follow `CONTRIBUTING.md` to propose additions.
 
-Each technology file contains both:
-- A **technical overview**
-- A **philosophical dilemma** or emotional implication
-
-To propose a new tech or subsystem, fork the repo and follow the submission guide in `CONTRIBUTING.md`.
-
+~JSON starts here~
+{
+  "id": "technology_index",
+  "type": "meta",
+  "name": "PS Technology Index",
+  "tags": ["meta", "technology", "overview"]
+}
