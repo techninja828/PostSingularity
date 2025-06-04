@@ -21,3 +21,10 @@ Welcome to the world **after intelligence exploded**
 - [Philosophy Index](philosophy/index.md)
 - [Protocols Index](protocols/index.md)
 
+## How to Contribute
+
+See the [Contributing guide](Contributing.md) for how to submit ideas. New
+Markdown files should follow the template outlined there. Helpful starting
+points are the [Character Index](characters/index.md) and the
+[Technology Index](worldbible/technologies/index.md).
+
