@@ -33,3 +33,14 @@ There are no presidents. No permanent councils. Only rotating **alignment cluste
 - Kai leads an infrastructure proposal that hits an emotional wall—learning to pause and reframe is the real success
 - Mara serves on a cluster that dissolves after choosing not to intervene in a dangerous Bliss Threshold decision
 - A rogue group bypasses resonance gating and releases a technology early—fracturing trust
+
+~JSON starts here~
+{
+  "id": "tech_governance_systems",
+  "type": "technology",
+  "name": "Governance Systems",
+  "tags": ["governance", "communication"],
+  "introduced_in_cycle": 3,
+  "related_characters": ["kai", "mara"],
+  "impact": ["alignment clusters", "resonance gating"]
+}

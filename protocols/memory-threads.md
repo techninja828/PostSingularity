@@ -1,23 +1,28 @@
 # Memory Threads Protocol
+Tags: [protocol], [documentation], [canon]
 
-Memory Threads are the core narrative scaffolding of the Post Singularity world. They track events, relationships, emotional arcs, and cultural shifts.
+## Summary
+Memory Threads track events, relationships, and emotional arcs across the PS world, forming the scaffolding of its evolving canon.
 
-## Core Principles
+## Function
+Threads store origin points, emotional classifications, resonance scores, and canonical status, allowing the community to promote or retire storylines.
 
-1. **Transparency** — All updates to core canon must be visible and traceable.
-2. **Emotional Integrity** — New threads must not distort the emotional tone of the world.
-3. **Forking Allowed, Convergence Preferred** — Side stories may diverge, but the community elects a primary timeline.
+## Cultural Effects
+Shared documentation of experiences encourages transparency and collective storytelling.
 
-## Components of a Memory Thread
+## Philosophical Tensions
+How much should emotional response dictate what becomes core canon versus branch lore?
 
-- Origin (character, event, or moment)
-- Emotional arc classification (grief, growth, emergence, disconnection, etc.)
-- Resonance score (measured by emotional response + vote weight)
-- Canonical Status (core / branch / decayed)
+## Story Use
+Characters may reference or manipulate Memory Threads to influence public perception or preserve history.
 
-## Community Role
-
-Community members or token-holders may vote to:
-- Promote a branch thread to core canon
-- Retire threads that lose resonance
-- Contribute lore to expand unresolved branches
+~JSON starts here~
+{
+  "id": "proto_memory_threads",
+  "type": "protocol",
+  "name": "Memory Threads",
+  "tags": ["documentation", "canon"],
+  "introduced_in_cycle": 0,
+  "related_characters": [],
+  "impact": ["world building", "collective memory"]
+}

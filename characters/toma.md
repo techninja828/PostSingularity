@@ -1,18 +1,28 @@
 # Toma – The Analogist
+Tags: [character], [craft], [tradition]
 
-**Role:** Artisan and builder of modular, entirely handmade living systems. Lives in a semi-off-grid enclave where AI is tolerated but not obeyed.
+## Summary
+Toma is an artisan who builds modular living systems entirely by hand, living in a semi-off-grid enclave where AI is tolerated but rarely obeyed.
 
-**Beliefs:**  
-- Struggle is sacred. Craft reveals character.  
-- AI can support life, but not **live it**.  
-- Mass-produced goods—even perfect ones—lack meaning.
+## Function
+He preserves manual techniques such as leatherworking and biodynamic farming, teaching others to value struggle and craftsmanship.
 
-**Practices:**  
-- Leatherworking, wood joinery, biodynamic farming  
-- Participates in mirror sessions only when consent is deeply earned  
-- Occasionally teaches young PS citizens how to “make something that’ll outlive you”
+## Cultural Effects
+Toma's enclave highlights the coexistence of high-tech society with slow, traditional practices, reminding others that meaning can outlast automation.
 
-**Narrative Arc Ideas:**  
-- Builds a cabin for someone who once insulted him—redefines service  
-- Faces pressure to “replicate” his work using neural-scanned modeling  
-- Learns that presence can also be scaled—but must decide if he trusts it
+## Philosophical Tensions
+He questions whether technology can support life without hollowing it out, resisting the push to replicate his work through neural scanning.
+
+## Story Use
+Toma often builds for those who once insulted him, demonstrating service and humility.
+
+~JSON starts here~
+{
+  "id": "char_toma",
+  "type": "character",
+  "name": "Toma",
+  "tags": ["craft", "tradition"],
+  "introduced_in_cycle": 1,
+  "related_characters": ["kai", "reya"],
+  "impact": ["handmade living", "philosophical resistance"]
+}

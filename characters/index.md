@@ -1,17 +1,28 @@
 # Character Index – Core Perspectives of the PS World
+Tags: [index], [characters]
 
-These characters serve as narrative lenses into the Post Singularity world. Each represents a different relationship to AI, emotion, and meaning in the new era.
+## Summary
+These characters serve as lenses into the Post Singularity era, each reflecting a different relationship to AI, emotion, and meaning.
 
-- **Kai – The Connector**  
-  A human-centered project lead who thrives at the intersection of systems and relationships. Tries to harmonize human unpredictability with AI clarity.
+## Function
+The index offers quick reference links for writers and collaborators exploring the PS narrative space.
 
-- **Reya – The Engineer**  
-  Designs aerospace systems and planetary infrastructure in harmony with emotional and ecological data. Believes expansion and empathy can coexist.
+## Cultural Effects
+By highlighting multiple viewpoints, the roster encourages stories that explore tension between technology and humanity.
 
-- **Toma – The Analogist**  
-  Rejects most automation, builds everything by hand. Believes slowness, struggle, and imperfection are essential to humanity’s survival.
+## Philosophical Tensions
+Which voices define progress—those who embrace AI partnership or those who resist it?
 
-- **Mara – The Elder**  
-  A retired mentor who carries memory threads and teaches others how to metabolize emotion across generations.
+## Story Use
+Use this index to select a point-of-view or to introduce new characters that interact with Kai, Reya, Toma, and Mara.
 
-Additional characters may emerge as branch threads expand the world.
+~JSON starts here~
+{
+  "id": "meta_character_index",
+  "type": "reference",
+  "name": "Character Index",
+  "tags": ["index", "characters"],
+  "introduced_in_cycle": 0,
+  "related_characters": ["kai", "reya", "toma", "mara"],
+  "impact": ["entry point", "story planning"]
+}

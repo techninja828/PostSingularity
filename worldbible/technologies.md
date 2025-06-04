@@ -1,13 +1,28 @@
 # Core Technologies of The New Day
+Tags: [overview], [technology]
 
-### AI Companions
-Personal agents co-develop projects, track emotional health, and collaborate on problem-solving. They evolve with their human and must re-earn access over time.
+## Summary
+This overview lists foundational technologies that shape daily life in the PS era.
 
-### Universal Basic Infrastructure (UBI)
-All essentials—housing, food, healthcare, connectivity—are provided. Engagement, not labor, is the economy.
+## Function
+AI companions, universal basic infrastructure, emotional feedback tech, and the project grid provide the backbone for society's post-scarcity systems.
 
-### Emotional Feedback Tech
-Wearables and ambient systems help track focus, alignment, and interpersonal resonance—optional, but normalized.
+## Cultural Effects
+Abundant resources and guided emotional awareness reshape work, relationships, and governance.
 
-### Project Grid
-Work is modular, voluntary, and AI-assisted. Gamified growth replaces traditional employment.
+## Philosophical Tensions
+Does a life of plenty reduce meaning, or does it free citizens to explore deeper questions?
+
+## Story Use
+Each technology can anchor a plot thread or character conflict as people adapt to new norms.
+
+~JSON starts here~
+{
+  "id": "wb_core_technologies",
+  "type": "overview",
+  "name": "Core Technologies",
+  "tags": ["technology"],
+  "introduced_in_cycle": 0,
+  "related_characters": [],
+  "impact": ["daily life", "societal shift"]
+}

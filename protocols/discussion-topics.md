@@ -1,26 +1,28 @@
 # Ongoing Discussion Topics (Open Canon)
+Tags: [protocol], [discussion], [open-canon]
 
-These topics are intentionally left open for future deliberation, community feedback, or story exploration.
+## Summary
+These topics remain unresolved so the community can continue debating the direction of PS society.
 
----
+## Function
+The list acts as a prompt bank for creators and collaborators to explore neural ethics, justice, alien contact, and resource questions.
 
-## 🧠 Neural Integration Ethics
-- Use of neural tech in conflict resolution or justice
-- Boundaries between empathy, coercion, and violation
-- Regulation of identity manipulation and memory editing
+## Cultural Effects
+Open debates encourage a culture of continual questioning and adaptation.
 
-## ⚖️ Judicial Use of Experiential Sharing
-- Should victims and offenders participate in forced or guided emotional transfer?
-- Who decides when emotional mirroring is ethical?
+## Philosophical Tensions
+How much consensus is necessary before implementing world-changing technologies or policies?
 
-## 🧬 Alien Integration (Future Timeline)
-- First contact implications (social, philosophical, biological)
-- Whether alien empathy protocols are compatible with PS emotional models
+## Story Use
+Writers may weave these topics into scenes or conflicts, showing how characters respond to unresolved issues.
 
-## 🌊 Oceanic Societies
-- Deep-sea settlements: full autonomy or AI-supported colonies?
-- Resource cycles and cultural divergence
-
-## 📦 Rare Material Sourcing + Local Fabrication
-- Ethical supply chains vs. automated extraction
-- Decentralized vs. collective resource ownership models
+~JSON starts here~
+{
+  "id": "proto_discussion_topics",
+  "type": "protocol",
+  "name": "Discussion Topics",
+  "tags": ["discussion", "open-canon"],
+  "introduced_in_cycle": 0,
+  "related_characters": [],
+  "impact": ["ongoing debate", "story prompts"]
+}

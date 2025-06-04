@@ -1,34 +1,28 @@
-### Snippet 006
-- Format: Dialogue  
-- Use: Citizens comparing past to PS  
-- Text:  
-  *"That was like, what... Cycle 6? Before they started tracking emotional fidelity in agents."*  
-- Links: [trust-fabrics.md], [timeline.md]
+# Lore Snippets
+Tags: [meta], [reference], [snippets]
 
-### Snippet 007
-- Format: Narrator voiceover  
-- Use: Early episode flashback  
-- Text:  
-  *"In the first dozen cycles, we lost more systems than we upgraded. Progress didn’t wait for readiness."*  
-- Links: [timeline.md]
+## Summary
+Short excerpts and quotes that capture the tone and history of the PS world.
 
-### Snippet 008
-- Format: UI overlay in a system  
-- Use: Background visual  
-- Text:  
-  *"Cycle 17 PS — Verified human override required for AI-system reboot."*  
-- Links: [ai-agents.md], [governance-systems.md]
+## Function
+Provide ready-made dialogue, narration, or visuals that writers can drop into scenes for flavor.
 
-### Snippet 009
-- Format: Character aside  
-- Use: Philosophical moment  
-- Text:  
-  *"Every 28 days, we reinvented what it meant to be alive. And I barely caught my breath."*  
-- Links: [timeline.md]
+## Cultural Effects
+Snippets become a shared pool of cultural references, hinting at deeper lore without full exposition.
 
-### Snippet 010
-- Format: Street mural  
-- Use: Visual in city shot  
-- Text:  
-  *"PS13: We stopped asking who was in control. We started asking if it mattered."*  
-- Links: [governance-systems.md], [timeline.md]
+## Philosophical Tensions
+Do isolated fragments distort the larger narrative or invite richer interpretation?
+
+## Story Use
+Select or remix snippets when crafting new chapters or multimedia pieces.
+
+~JSON starts here~
+{
+  "id": "meta_lore_snippets",
+  "type": "meta",
+  "name": "Lore Snippets",
+  "tags": ["snippets"],
+  "introduced_in_cycle": 0,
+  "related_characters": [],
+  "impact": ["quick references"]
+}
