@@ -32,6 +32,9 @@ Markdown files should follow the template outlined there. Helpful starting
 points are the [Character Index](characters/index.md) and the
 [Technology Index](worldbible/technologies/index.md).
 
+## Technical Tools
+
+Utilities such as the chat bot, validation scripts, and the static site generator live in the [`tools/`](tools/) directory.
 
 ```json
 {
