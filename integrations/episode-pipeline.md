@@ -11,7 +11,7 @@ The episode pipeline converts repository lore into scripts or storyboards for li
 4. Editors review the AI output, updating the lore if new details become canonical.
 
 ## Required Data Exports
-- **Metadata Validation:** Run `scripts/validate_metadata.py` to verify that all Markdown files include tags and JSON blocks.
+- **Metadata Validation:** Run `tools/scripts/validate_metadata.py` to verify that all Markdown files include tags and JSON blocks.
 - **Data Export:** Use a preprocessing tool to convert Markdown and metadata into structured JSON. Each entry should reference character IDs, location IDs, and thematic tags so the AI can retrieve context quickly.
 
 ## Preprocessing Steps
