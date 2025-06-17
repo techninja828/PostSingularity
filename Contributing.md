@@ -67,3 +67,8 @@ How this might appear in a character arc, setting detail, or dramatic scene.
   "impact": ["emotional sharing", "experience streaming"]
 }
 ```
+
+## Submitting Experimental Ideas
+- Place controversial or uncertain concepts in the [`pending-review/`](pending-review/) folder.
+- Log the submission in [`submissions-log.md`](submissions-log.md) along with your notes and intended cycle.
+- Once discussed and approved, the material can be moved to the appropriate directory or deleted.

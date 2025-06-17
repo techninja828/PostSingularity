@@ -16,6 +16,10 @@ How strictly should collaborative worlds enforce style and canon versus encourag
 ## Story Use
 Use this guide when proposing new arcs or media; reference the timelines and character files to stay grounded.
 
+### Pending Review Folder
+Drafts that push boundaries or need discussion should go in [`../../pending-review/`](../../pending-review/).
+Record the submission in [`../../submissions-log.md`](../../submissions-log.md) so others know its status.
+
 ```json
 {
   "id": "meta_creator_guide",
