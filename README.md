@@ -31,6 +31,8 @@ See the [Contributing guide](Contributing.md) for how to submit ideas. New
 Markdown files should follow the template outlined there. Helpful starting
 points are the [Character Index](characters/index.md) and the
 [Technology Index](worldbible/technologies/index.md).
+Experimental or controversial drafts belong in [`pending-review/`](pending-review/)
+and should be noted in [`submissions-log.md`](submissions-log.md).
 
 ## Technical Tools
 
