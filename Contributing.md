@@ -72,3 +72,8 @@ How this might appear in a character arc, setting detail, or dramatic scene.
 - Place controversial or uncertain concepts in the [`pending-review/`](pending-review/) folder.
 - Log the submission in [`submissions-log.md`](submissions-log.md) along with your notes and intended cycle.
 - Once discussed and approved, the material can be moved to the appropriate directory or deleted.
+
+## 🔍 Pull Request Checks
+- Every pull request runs an automated metadata validation workflow.
+- The workflow executes `python tools/scripts/validate_metadata.py` and fails if any Markdown file lacks a `Tags:` line or JSON metadata block.
+- Ensure your PR passes this check before requesting review.
