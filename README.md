@@ -33,6 +33,7 @@ points are the [Character Index](characters/index.md) and the
 [Technology Index](worldbible/technologies/index.md).
 Experimental or controversial drafts belong in [`pending-review/`](pending-review/)
 and should be noted in [`submissions-log.md`](submissions-log.md).
+For lengthy disagreements, follow the [Debate Branches guide](docs/debate-branches.md) for a structured process, including optional voting when consensus is difficult.
 
 ## Technical Tools
 
