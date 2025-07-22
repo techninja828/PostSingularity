@@ -20,6 +20,24 @@ Agents operate through embedded neural interfaces or ambient, non-verbal systems
 
 They do **not** govern, command, or override without explicit consent—except in rare emergency override protocols.
 
+## Daily Interaction
+
+### Everyday Patterns
+- Morning check-ins align tasks and emotional aims for the day.
+- Agents quietly track mood and environment, surfacing suggestions only after a consent ping.
+- Communication flows through thoughtstreams or soft vocal cues, keeping the partnership fluid.
+
+### Consent Protocols
+- Significant actions require an explicit intent ping from the user.
+- Pings are logged in personal Memory Threads for accountability.
+- Consent can be revoked at any time with an override phrase, pausing agent activity.
+- Mentors guide minors and new users in learning these phrases.
+
+### Trust-Building Rituals
+- **Morning Alignment**: brief reflection where human and agent share status and concerns.
+- **Open Thread Review**: weekly gatherings that audit interactions and build transparency.
+- **Bond Renewal**: yearly celebration revisiting key memories and renegotiating boundaries.
+
 ## Cultural Effects
 
 - Children often bond with their first agent during early emotional mapping rituals  
