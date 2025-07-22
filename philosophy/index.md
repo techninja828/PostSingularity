@@ -5,6 +5,8 @@ Short summaries of philosophical essays shaping the PS world.
 
 - **[Bliss Divergence](./bliss-divergence.md)**  
   Voluntary neural bliss versus lived reality and its impact on society.
+- **[AI Trust](./ai-trust.md)**
+  Cultural reasons humans place faith in AI partners; see “Trust Fabrics” and “AI Agents.”
 
 More essays will be added as this collection grows.
 
