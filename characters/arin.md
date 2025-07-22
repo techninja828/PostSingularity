@@ -22,6 +22,15 @@ realm that resists control?
 Arin assists Reya with experimental sensors and partners with Toma to craft
 materials that respect fragile ecosystems.
 
+## Personal History
+Raised in floating settlements near the Submerged Archives, Arin blended seafarer lore with archival research from an early age.
+
+## Relationship to AI
+He programs narrow AI for his aquatic drones, trusting them for mapping while reserving ecological decisions for human judgment.
+
+## Ties to Key Locations
+Arin ferries artifacts between the Submerged Archives and the Orbital Sanctuary, bringing oceanic perspectives to off-world explorers.
+
 ```json
 {
   "id": "char_arin",

@@ -16,6 +16,15 @@ They wrestle with surrendering control, relearning how to lead humans, and letti
 ## Story Use
 Kai mediates between factions, sometimes disabling their agent to face conflict unfiltered.
 
+## Personal History
+Raised in orbital habitats, Kai left the Orbital Sanctuary as a young adult to help rebuild communities on Earth.
+
+## Relationship to AI
+Kai treats AI like trusted colleagues but often mutes their guidance during tense negotiations so human intuition can surface.
+
+## Ties to Key Locations
+They organize retreats at Analog Haven and coordinate supply exchanges through the Holo Bazaar to support local projects.
+
 ```json
 {
   "id": "char_kai",

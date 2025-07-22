@@ -16,6 +16,15 @@ She clashes with Toma over automation and often questions whether humanity is re
 ## Story Use
 Reya must decide if AI or human pilots should guide her first off-world sanctuary.
 
+## Personal History
+Growing up near the bustling Holo Bazaar, Reya scavenged old tech before studying forgotten schematics in the Submerged Archives.
+
+## Relationship to AI
+She engineers with AI partners yet keeps manual overrides to ensure every design honors human ethics over efficiency.
+
+## Ties to Key Locations
+Reya maintains a laboratory module in the Orbital Sanctuary where she prototypes habitats for remote settlements.
+
 ```json
 {
   "id": "char_reya",

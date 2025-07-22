@@ -16,6 +16,15 @@ He questions whether technology can support life without hollowing it out, resis
 ## Story Use
 Toma often builds for those who once insulted him, demonstrating service and humility.
 
+## Personal History
+Descended from craft guilds around Analog Haven, Toma learned woodworking and biodynamic farming from elders who survived the Singularity.
+
+## Relationship to AI
+He employs low-level AI only for resource tracking, refusing automated shortcuts that could erode the artistry of his work.
+
+## Ties to Key Locations
+Toma rarely leaves Analog Haven except to trade at the Holo Bazaar and consult the Submerged Archives for forgotten techniques.
+
 ```json
 {
   "id": "char_toma",

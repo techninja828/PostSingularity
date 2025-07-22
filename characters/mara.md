@@ -21,6 +21,15 @@ communities fracture under the strain of progress?
 Mara designs retreat spaces along the transportation mesh and mediates disputes
 over energy systems and Bliss Threshold decisions.
 
+## Personal History
+Born into a nomadic mediator family, Mara traveled across settlements before training at the Submerged Archives to honor ancestral memory.
+
+## Relationship to AI
+She consults AI sentiment analyses when gauging conflicts but insists final resolutions emerge from communal rituals.
+
+## Ties to Key Locations
+Mara convenes peace gatherings at the Orbital Sanctuary and retreats to Analog Haven for reflection after difficult negotiations.
+
 ```json
 {
   "id": "char_mara",
