@@ -22,7 +22,10 @@ Mara designs retreat spaces along the transportation mesh and mediates disputes
 over energy systems and Bliss Threshold decisions.
 
 ## Personal History
-Born into a nomadic mediator family, Mara traveled across settlements before training at the Submerged Archives to honor ancestral memory.
+Born into a nomadic mediator family, Mara traveled across settlements before training at the Submerged Archives to honor ancestral memory. Her lineage blends South Asian and West African traditions, giving her a rich repertoire of ritual languages and songs.
+
+## Appearance
+Mara has deep brown skin, wavy chestnut hair often braided with memory beads, and calm hazel eyes. She stands around 1.65 meters tall and favors flowing robes adorned with subtle patterns.
 
 ## Relationship to AI
 She consults AI sentiment analyses when gauging conflicts but insists final resolutions emerge from communal rituals.
@@ -38,6 +41,8 @@ Mara convenes peace gatherings at the Orbital Sanctuary and retreats to Analog H
   "tags": ["spiritual", "negotiation"],
   "introduced_in_cycle": 1,
   "related_characters": ["kai", "reya", "toma"],
-  "impact": ["conflict mediation", "cultural preservation"]
+  "impact": ["conflict mediation", "cultural preservation"],
+  "heritage": "South Asian and West African",
+  "appearance": "deep brown skin, chestnut hair, memory beads, flowing robes"
 }
 ```

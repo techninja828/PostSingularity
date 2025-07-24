@@ -17,7 +17,10 @@ He questions whether technology can support life without hollowing it out, resis
 Toma often builds for those who once insulted him, demonstrating service and humility.
 
 ## Personal History
-Descended from craft guilds around Analog Haven, Toma learned woodworking and biodynamic farming from elders who survived the Singularity.
+Descended from craft guilds around Analog Haven, Toma learned woodworking and biodynamic farming from elders who survived the Singularity. His ancestry combines Eastern European and Levantine lineages, shaping a stoic yet hospitable demeanor. Years of manual labor left him with calloused hands and a reputation for patient mentorship.
+
+## Appearance
+Toma stands nearly 1.8 meters tall with a sturdy frame, tan skin, and a short beard. Deep-set hazel eyes and weathered hands reveal decades of craftsmanship. He dresses in hand-stitched garments dyed with natural pigments.
 
 ## Relationship to AI
 He employs low-level AI only for resource tracking, refusing automated shortcuts that could erode the artistry of his work.
@@ -33,6 +36,8 @@ Toma rarely leaves Analog Haven except to trade at the Holo Bazaar and consult t
   "tags": ["craft", "tradition"],
   "introduced_in_cycle": 1,
   "related_characters": ["kai", "reya"],
-  "impact": ["handmade living", "philosophical resistance"]
+  "impact": ["handmade living", "philosophical resistance"],
+  "heritage": "Eastern European and Levantine",
+  "appearance": "sturdy build, tan skin, short beard, hand-stitched clothing"
 }
 ```
