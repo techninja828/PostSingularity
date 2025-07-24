@@ -23,7 +23,10 @@ Arin assists Reya with experimental sensors and partners with Toma to craft
 materials that respect fragile ecosystems.
 
 ## Personal History
-Raised in floating settlements near the Submerged Archives, Arin blended seafarer lore with archival research from an early age.
+Raised in floating settlements near the Submerged Archives, Arin blended seafarer lore with archival research from an early age. His family traces ancestry to Polynesian voyagers and Andean coastal communities, shaping his reverence for oceanic heritage. Decades of salvage missions have made him a respected mapmaker among remote habitats.
+
+## Appearance
+Arin stands around 1.6 meters with bronze skin, short curly black hair, and dark eyes. Marine tattoos spiral along his arms, and he favors lightweight wetsuits and utility belts.
 
 ## Relationship to AI
 He programs narrow AI for his aquatic drones, trusting them for mapping while reserving ecological decisions for human judgment.
@@ -39,6 +42,8 @@ Arin ferries artifacts between the Submerged Archives and the Orbital Sanctuary,
   "tags": ["exploration", "oceanic"],
   "introduced_in_cycle": 1,
   "related_characters": ["reya", "toma", "kai"],
-  "impact": ["marine exploration", "cross-cultural trade"]
+  "impact": ["marine exploration", "cross-cultural trade"],
+  "heritage": "Polynesian and Andean",
+  "appearance": "bronze skin, short curls, marine tattoos"
 }
 ```
