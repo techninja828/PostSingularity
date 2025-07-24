@@ -24,3 +24,14 @@ If no path is provided, the current directory is scanned recursively.
   "impact": ["utilities"]
 }
 ```
+
+## `check_cohesion.py`
+
+Analyze relationships across Markdown metadata. The script ensures all
+`related_characters` entries correspond to files in `characters/` and every
+`introduced_in_cycle` value appears in `worldbible/timeline.md`. It prints a
+list of missing references and a cohesiveness score.
+
+```bash
+python tools/scripts/check_cohesion.py [path]
+```

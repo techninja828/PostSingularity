@@ -5,6 +5,7 @@ on:
     paths:
       - '**.md'
       - 'tools/scripts/validate_metadata.py'
+      - 'tools/scripts/check_cohesion.py'
       - '.github/workflows/metadata.yml'
 
 jobs:
@@ -19,4 +20,6 @@ jobs:
         run: pip install markdown
       - name: Run metadata validator
         run: python tools/scripts/validate_metadata.py
+      - name: Check metadata cohesion
+        run: python tools/scripts/check_cohesion.py
 
