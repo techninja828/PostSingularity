@@ -5,7 +5,7 @@ Tags: [timeline], [ai-evolution], [societal-change]
 Time in the PS world is measured in 28-day Cycles that mark rapid cultural and technological shifts beginning at the Singularity Event.
 
 ## Function
-The timeline outlines key cycles such as the emergence of recursive AI, adoption of Universal Basic Access, and the Helex Drift rogue event.
+The timeline outlines key cycles such as the emergence of recursive AI, adoption of [Universal Basic Access](./universal-basic-access.md), and the Helex Drift rogue event.
 
 ## Cultural Effects
 Perceived progress accelerates; institutions collapse and reform in response to new technologies and emotional frameworks.
