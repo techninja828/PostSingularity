@@ -2,7 +2,21 @@
 Tags: [character], [craft], [tradition]
 
 ## Summary
-Toma is an artisan who builds modular living systems entirely by hand, living in a semi-off-grid enclave where AI is tolerated but rarely obeyed.
+Toma grew up among artisan guilds clustered around Analog Haven, spending most of
+his youth in woodshops and on rugged farms. Elders taught him that every tool
+carries a spirit and every craft demands patience.
+
+As an adult he constructed a semi-off-grid enclave where modular dwellings are
+built entirely by hand. Visitors trade skills with him, learning to shape leather
+and grow crops without relying on mass automation.
+
+Toma now mentors travelers who seek a slower path. He demonstrates how deliberate
+labor can nurture both community and resilience, even in a world racing toward
+synthetic convenience.
+
+While he accepts AI for basic resource tracking, Toma refuses to let algorithms
+dictate creative choices. His workshops prove that tradition and innovation can
+coexist only when humans remain at the center.
 
 ## Function
 He preserves manual techniques such as leatherworking and biodynamic farming, teaching others to value struggle and craftsmanship.

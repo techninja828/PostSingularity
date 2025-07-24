@@ -2,9 +2,21 @@
 Tags: [character], [exploration], [oceanic]
 
 ## Summary
-Arin was raised among submerged habitats and travels constantly between
-underwater communities and orbital outposts. He bridges marine ecology with
-advanced robotics, believing exploration should honor the sea.
+Arin grew up among the floating corridors of the Submerged Archives, where sea
+lore mingled with cutting-edge robotics. From a young age he dove into old
+wrecks and mapped coral tunnels with homemade sensors.
+
+Constant travels between underwater outposts and orbit shaped him into a natural
+ambassador. He ferries salvaged technology to remote labs and returns with new
+algorithms for the next dive.
+
+Polynesian voyagers and Andean coastal communities feature prominently in his
+family history. Arin weaves their songs into navigation protocols, believing
+ancestral respect keeps exploration in harmony with the ocean.
+
+Revered as a mapmaker, he charts hidden trenches while mentoring younger
+scavengers. His companions see him as a living bridge between marine traditions
+and the advanced robotics he champions.
 
 ## Function
 Arin maintains fleets of aquatic drones and salvages materials from shipwrecks,

@@ -2,8 +2,22 @@
 Tags: [character], [spiritual], [negotiation]
 
 ## Summary
-Mara weaves ritual and data to resolve conflicts, guiding communities through
-technological change without abandoning sacred practices.
+Mara was raised in a lineage of traveling mediators who journeyed from one
+settlement to the next. Childhood lessons focused on interpreting dreams and
+settling disputes before they divided entire communities.
+
+Over time she became known for blending ritual chants with analytic data,
+tracking emotional currents through Memory Threads to resolve tensions. Teams
+planning large projects seek her guidance to keep negotiations grounded.
+
+Mara ensures that spiritual sites remain respected during rapid construction and
+that elders have a voice in debates about new technology. Her calm presence often
+prevents conflicts from escalating.
+
+Still, she wrestles with balancing ancestral obligations and her love of
+innovation. She draws on her South Asian and West African heritage to craft
+
+resolutions that honor the past while inviting people toward a shared future.
 
 ## Function
 She tracks emotional currents via Memory Threads and facilitates dialogue

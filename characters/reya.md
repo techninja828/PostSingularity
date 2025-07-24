@@ -2,7 +2,21 @@
 Tags: [character], [innovation], [exploration]
 
 ## Summary
-A visionary systems builder, Reya designs orbital habitats, climate-modulating drones, and next-generation mobility systems.
+Reya spent her youth near the bustling Holo Bazaar, scavenging discarded gadgets
+and dreaming of new ways to connect distant settlements. Early mentors taught her
+to read weathered schematics and respect the people who built them.
+
+After years in the Submerged Archives, she joined orbital engineers to craft
+habitats capable of supporting fragile ecosystems. Her designs range from modular
+stations to climate drones that protect coastal villages.
+
+What sets Reya apart is her insistence on blending emotional data with structural
+analysis. She believes technology must respond to human feelings as much as to
+physical stress tests.
+
+Though celebrated as a visionary, she remains cautious about runaway automation.
+Reya mentors younger builders, always reminding them that exploration must serve
+more than economic ambition.
 
 ## Function
 Reya integrates emotional data into engineering choices, balancing expansion with sacred stewardship of the cosmos.

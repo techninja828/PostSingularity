@@ -2,7 +2,22 @@
 Tags: [character], [leadership], [community]
 
 ## Summary
-Kai thrives in the hybrid space between emotional depth and future-building. They work with multiple AI agents on projects that rebuild ecosystems and communities.
+Kai was born in a series of rotating habitats that orbit Earth, learning early
+that cultural exchange is vital for survival in confined spaces. Their childhood
+was spent helping older residents adapt to new technologies while preserving
+diverse customs.
+
+Now an accomplished facilitator, Kai works alongside several AI agents to rebuild
+damaged ecosystems and strengthen disconnected communities. They coordinate
+scientists, artisans, and families in a shared effort to heal the planet.
+
+Kai's leadership style centers empathy and ritual. They encourage reflection
+circles and integrate emotional data into logistics so that progress never loses
+its human heart.
+
+Despite years of success, Kai still worries about losing authenticity amid rapid
+change. They often pause projects to reconnect with their roots before guiding
+partners toward the next ambitious goal.
 
 ## Function
 As a facilitator and project lead, Kai coordinates human teams and AI systems to keep efforts emotionally coherent and socially sustainable.
