@@ -16,6 +16,11 @@ Does accelerated change enhance humanity or overwhelm it? How do traditions surv
 ## Story Use
 Use cycle references to anchor events, show the pace of adaptation, or reveal disagreements about the true nature of PS history.
 
+### Cycle 8–10 Highlights
+- **Cycle 8 – Oceanic Bloom**: Arin and Reya coordinate new undersea settlements as Oceanic Zones link with surface trade routes.
+- **Cycle 9 – Third-Mind Accord**: Mara and Kai help launch governance clusters where AI Agents share decision power with citizens.
+- **Cycle 10 – Analog Revival**: Toma's gatherings at Analog Haven inspire a return to tactile rituals alongside neural tech.
+
 ```json
 {
   "id": "wb_timeline",
