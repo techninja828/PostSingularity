@@ -2,21 +2,25 @@
 Tags: [character], [craft], [tradition]
 
 ## Summary
-Toma grew up among artisan guilds clustered around Analog Haven, spending most of
-his youth in woodshops and on rugged farms. Elders taught him that every tool
-carries a spirit and every craft demands patience.
+Toma grew up among artisan guilds clustered around Analog Haven, spending most of his youth in woodshops and on rugged farms. Elders taught him that every tool carries a spirit and every craft demands patience.
 
-As an adult he constructed a semi-off-grid enclave where modular dwellings are
-built entirely by hand. Visitors trade skills with him, learning to shape leather
-and grow crops without relying on mass automation.
+As an adult he constructed a semi-off-grid enclave where modular dwellings are built entirely by hand. Visitors trade skills with him, learning to shape leather and grow crops without relying on mass automation.
 
-Toma now mentors travelers who seek a slower path. He demonstrates how deliberate
-labor can nurture both community and resilience, even in a world racing toward
-synthetic convenience.
+Toma now mentors travelers who seek a slower path. He demonstrates how deliberate labor can nurture both community and resilience, even in a world racing toward synthetic convenience.
 
-While he accepts AI for basic resource tracking, Toma refuses to let algorithms
-dictate creative choices. His workshops prove that tradition and innovation can
-coexist only when humans remain at the center.
+While he accepts AI for basic resource tracking, Toma refuses to let algorithms dictate creative choices. His workshops prove that tradition and innovation can coexist only when humans remain at the center.
+
+## Formative Events
+- Hosted the first retreats of the [Analog Revival](../worldbible/events/analog-revival.md) at [Analog Haven](../locations/analog-haven.md), cementing his role as a guardian of manual craft.
+- Journeys to the [Submerged Archives](../locations/submerged-archives.md) revealed forgotten techniques he now teaches.
+
+## Current Motivations
+- Expand the Analog Revival network without compromising its slow, human pace.
+- Trade carefully with the [Holo Bazaar](../locations/holo-bazaar.md) to acquire rare materials while resisting mass production.
+
+## Key Conflicts
+- Debates with Reya over how much automation should guide new habitats, tension heightened after the [Analog Revival](../worldbible/events/analog-revival.md).
+- Struggles when market demand from the [Holo Bazaar](../locations/holo-bazaar.md) pressures his enclave to scale beyond sustainable limits.
 
 ## Function
 He preserves manual techniques such as leatherworking and biodynamic farming, teaching others to value struggle and craftsmanship.
@@ -40,7 +44,7 @@ Toma stands nearly 1.8 meters tall with a sturdy frame, tan skin, and a short be
 He employs low-level AI only for resource tracking, refusing automated shortcuts that could erode the artistry of his work.
 
 ## Ties to Key Locations
-Toma rarely leaves Analog Haven except to trade at the Holo Bazaar and consult the Submerged Archives for forgotten techniques.
+Toma rarely leaves [Analog Haven](../locations/analog-haven.md) except to trade at the [Holo Bazaar](../locations/holo-bazaar.md) and consult the [Submerged Archives](../locations/submerged-archives.md) for forgotten techniques.
 
 ```json
 {
@@ -49,8 +53,8 @@ Toma rarely leaves Analog Haven except to trade at the Holo Bazaar and consult t
   "name": "Toma",
   "tags": ["craft", "tradition"],
   "introduced_in_cycle": 1,
-  "related_characters": ["kai", "reya"],
-  "impact": ["handmade living", "philosophical resistance"],
+  "related_characters": ["kai", "reya", "arin"],
+  "impact": ["handmade living", "philosophical resistance", "analog revival"],
   "heritage": "Eastern European and Levantine",
   "appearance": "sturdy build, tan skin, short beard, hand-stitched clothing"
 }
