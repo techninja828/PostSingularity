@@ -2,7 +2,7 @@
 Tags: [meta], [workflow], [collaboration]
 
 ## Summary
-Use a debate branch when a contribution might significantly alter existing lore or cause disagreement. This process keeps discussions organized and transparent.
+Use a debate branch when a contribution might significantly alter existing lore or cause disagreement. This process keeps discussions organized and transparent. For the complete lifecycle of a contribution, see [issue-resolution.md](issue-resolution.md).
 
 ## Procedure
 1. Create a branch named `debate/your-topic` from `main`.
