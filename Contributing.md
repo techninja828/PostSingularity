@@ -72,6 +72,7 @@ How this might appear in a character arc, setting detail, or dramatic scene.
 - Place controversial or uncertain concepts in the [`pending-review/`](pending-review/) folder.
 - Log the submission in [`submissions-log.md`](submissions-log.md) along with your notes and intended cycle.
 - For drawn-out discussions, create a debate branch and issue as described in [docs/debate-branches.md](docs/debate-branches.md) to follow the structured debate process and use the optional voting system if consensus stalls.
+- Review the [Issue Resolution Workflow](docs/issue-resolution.md) for the full lifecycle from submission to merge.
 - Once discussed and approved, the material can be moved to the appropriate directory or deleted.
 
 ## 🔍 Pull Request Checks
