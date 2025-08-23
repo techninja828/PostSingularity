@@ -31,6 +31,7 @@ Below are links to each technology document:
 - [Oceanic Zones](./oceanic-zones.md)
 - [Privacy Drift](./privacy-drift.md)
 - [Replication Systems](./replication-systems.md)
+- [Robotics](./robotics.md)
 - [Rogue AI Handling](./rogue-ai-handling.md)
 - [Transportation Mesh](./transportation-mesh.md)
 - [Trust Fabrics](./trust-fabrics.md)
