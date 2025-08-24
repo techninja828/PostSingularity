@@ -24,6 +24,7 @@ Welcome to the world **after intelligence exploded**
 - [Protocols Index](protocols/index.md)
 - [Location Index](locations/index.md)
 - [Meta Guides Index](worldbible/meta/index.md)
+- [Stories Index](stories/index.md)
 
 ## How to Contribute
 
