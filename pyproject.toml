@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "postsingularity-research"
+version = "0.1.0"
+description = "Evidence-gathering research agent for the PostSingularity world bible"
+requires-python = ">=3.10"
+dependencies = [
+  "openai>=2.0.0",
+  "pydantic>=2.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+postsingularity-research = "tools.research_agent:main"
+postsingularity-crew = "tools.research_crew:main"
+
+[tool.setuptools]
+packages = ["tools"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

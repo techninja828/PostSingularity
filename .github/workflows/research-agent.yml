@@ -1,0 +1,125 @@
+name: Daily PostSingularity research crew
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: Optional research topic; blank uses the rotating daily lane
+        required: false
+        type: string
+      lane:
+        description: Research lane
+        required: true
+        default: auto
+        type: choice
+        options:
+          - auto
+          - ai
+          - robotics
+          - neurotechnology
+          - biotechnology
+          - energy
+          - space
+          - governance
+          - social-systems
+      lookback_days:
+        description: Number of days to prioritize
+        required: true
+        default: "7"
+        type: string
+  schedule:
+    - cron: "0 16 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: daily-research-crew
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5.6' }}
+      RESEARCH_TOPIC: ${{ inputs.topic }}
+      RESEARCH_LANE: ${{ inputs.lane || 'auto' }}
+      LOOKBACK_DAYS: ${{ inputs.lookback_days || '7' }}
+      OTEL_SDK_DISABLED: "true"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            pyproject.toml
+            requirements-research-crew.txt
+
+      - name: Check configuration
+        id: config
+        shell: bash
+        run: |
+          if [[ -z "$OPENAI_API_KEY" ]]; then
+            echo "OPENAI_API_KEY is not configured; skipping the daily crew."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install research crew
+        if: steps.config.outputs.enabled == 'true'
+        run: |
+          python -m pip install -r requirements-research-crew.txt
+          python -m pip install .
+
+      - name: Run daily research crew
+        if: steps.config.outputs.enabled == 'true'
+        shell: bash
+        run: |
+          args=(
+            --lane "$RESEARCH_LANE"
+            --lookback-days "$LOOKBACK_DAYS"
+            --model "$OPENAI_MODEL"
+          )
+          if [[ -n "$RESEARCH_TOPIC" ]]; then
+            args+=(--topic "$RESEARCH_TOPIC")
+          fi
+          python -m tools.research_crew "${args[@]}"
+
+      - name: Validate generated Markdown
+        if: steps.config.outputs.enabled == 'true'
+        run: |
+          python tools/scripts/validate_metadata.py
+          python tools/scripts/check_cohesion.py
+
+      - name: Open daily research review pull request
+        if: steps.config.outputs.enabled == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No research changes were generated."
+            exit 0
+          fi
+
+          run_date="$(date -u +%Y-%m-%d)"
+          branch="research-crew/${run_date}-${GITHUB_RUN_ID}"
+          git config user.name "postsingularity-research[bot]"
+          git config user.email "postsingularity-research[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add pending-review/agent-research submissions-log.md
+          git commit -m "Add ${run_date} research crew brief"
+          git push origin "$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "Review PostSingularity research brief - ${run_date}" \
+            --body "Daily, non-canonical CrewAI research for human source verification and assumption review. Canon and the assumption registry were not modified."

@@ -40,6 +40,10 @@ For lengthy disagreements, follow the [Debate Branches guide](docs/debate-branch
 
 Utilities such as the chat bot, validation scripts, and the static site generator live in the [`tools/`](tools/) directory.
 
+The [daily research crew](research/CREW.md) tracks current AI and technology
+developments against the storyworld's [assumption registry](research/assumptions.json).
+Its reports are staged for human review and never change canon automatically.
+
 ```json
 {
   "id": "ps_overview",
