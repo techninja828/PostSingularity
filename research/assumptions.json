@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "last_human_reviewed": null,
+  "assumptions": [
+    {
+      "id": "PS-AI-001",
+      "title": "Recursive AI progress can create a societal discontinuity",
+      "claim": "Recursive improvement or tightly coupled AI development can advance rapidly enough to make existing institutions and expectations lose relevance.",
+      "kind": "assumption",
+      "lane": "ai",
+      "horizon": "pre-singularity",
+      "status": "unassessed",
+      "canon_sources": [
+        "worldbible/singularity-event.md",
+        "worldbible/timeline.md"
+      ],
+      "keywords": ["recursive AI", "capability growth", "automation", "institutions", "intelligence explosion"],
+      "signals_to_watch": ["AI research automation", "capability evaluation trends", "institutional adaptation speed"],
+      "falsifiers": ["sustained capability plateaus", "persistent inability to automate AI research", "institutions adapting faster than capability change"]
+    },
+    {
+      "id": "PS-AI-002",
+      "title": "Persistent personal AI agents become collaborative partners",
+      "claim": "AI agents become durable, personalized collaborators that participate in creative work, emotional reflection, relationships, and community decisions.",
+      "kind": "prediction",
+      "lane": "ai",
+      "horizon": "near-to-medium",
+      "status": "unassessed",
+      "canon_sources": ["worldbible/technologies/ai-agents.md"],
+      "keywords": ["personal agents", "memory", "AI companions", "delegation", "emotional AI", "consent"],
+      "signals_to_watch": ["persistent agent memory", "autonomous task completion", "companion adoption", "agent consent controls"],
+      "falsifiers": ["users consistently reject persistent agents", "personalization remains unreliable", "regulation prevents durable agent relationships"]
+    },
+    {
+      "id": "PS-AI-003",
+      "title": "AI influence drives stronger provenance and audit systems",
+      "claim": "As AI systems gain influence, societies require inspectable provenance, verification rituals, audit trails, and graduated oversight.",
+      "kind": "prediction",
+      "lane": "governance",
+      "horizon": "near-to-medium",
+      "status": "unassessed",
+      "canon_sources": [
+        "worldbible/technologies/trust-fabrics.md",
+        "philosophy/ai-trust.md"
+      ],
+      "keywords": ["provenance", "AI audit", "transparency", "content authenticity", "oversight", "trust"],
+      "signals_to_watch": ["AI transparency standards", "content provenance adoption", "model audits", "regulatory disclosure rules"],
+      "falsifiers": ["high-impact AI remains broadly opaque without social resistance", "provenance systems fail to gain adoption"]
+    },
+    {
+      "id": "PS-NEURO-001",
+      "title": "High-bandwidth neural interfaces connect people and AI",
+      "claim": "Safe neural interfaces eventually support rich two-way communication between nervous systems and AI, including sensory or emotional information.",
+      "kind": "prediction",
+      "lane": "neurotechnology",
+      "horizon": "medium-to-long",
+      "status": "unassessed",
+      "canon_sources": ["worldbible/technologies/neural-links.md"],
+      "keywords": ["brain computer interface", "neural interface", "sensory feedback", "neuroprosthetics", "emotion decoding"],
+      "signals_to_watch": ["BCI channel count", "bidirectional implants", "long-term implant safety", "decoded speech and affect"],
+      "falsifiers": ["intractable tissue response", "no durable bandwidth improvement", "unacceptable safety or privacy tradeoffs"]
+    },
+    {
+      "id": "PS-NEURO-002",
+      "title": "Engineered mental states become a governance problem",
+      "claim": "Reliable AI-mediated control of mood, reward, or immersive experience creates collective questions about consent, dependency, participation, and meaning.",
+      "kind": "prediction",
+      "lane": "neurotechnology",
+      "horizon": "medium-to-long",
+      "status": "unassessed",
+      "canon_sources": ["philosophy/bliss-divergence.md"],
+      "keywords": ["mood modulation", "neurostimulation", "virtual reality", "reward", "addiction", "mental health"],
+      "signals_to_watch": ["closed-loop neurostimulation", "therapeutic mood control", "immersive platform dependency", "neuro-rights policy"],
+      "falsifiers": ["mental-state control remains too crude or unsafe", "social effects remain limited to narrow clinical use"]
+    },
+    {
+      "id": "PS-GOV-001",
+      "title": "Human-AI decision systems reshape public governance",
+      "claim": "Temporary, issue-specific human-AI decision groups become more credible than fixed institutions for some complex public decisions.",
+      "kind": "prediction",
+      "lane": "governance",
+      "horizon": "medium",
+      "status": "unassessed",
+      "canon_sources": ["worldbible/technologies/governance-systems.md"],
+      "keywords": ["AI governance", "participatory governance", "deliberation", "collective intelligence", "digital democracy"],
+      "signals_to_watch": ["AI-assisted public deliberation", "citizen assemblies", "algorithmic impact review", "temporary governance bodies"],
+      "falsifiers": ["AI participation consistently reduces legitimacy", "fixed institutions reject or absorb all issue-specific governance"]
+    },
+    {
+      "id": "PS-ENERGY-001",
+      "title": "Abundant distributed energy reduces survival labor",
+      "claim": "Cheap, clean, widely distributed energy becomes abundant enough to reduce material insecurity and expand human time for care, art, and exploration.",
+      "kind": "prediction",
+      "lane": "energy",
+      "horizon": "medium-to-long",
+      "status": "unassessed",
+      "canon_sources": [
+        "worldbible/technologies/energy-systems.md",
+        "worldbible/timeline.md"
+      ],
+      "keywords": ["energy abundance", "solar", "fusion", "storage", "microgrid", "geothermal"],
+      "signals_to_watch": ["levelized energy cost", "grid storage", "fusion demonstrations", "microgrid deployment", "energy access"],
+      "falsifiers": ["persistent storage and transmission bottlenecks", "energy costs stop declining", "abundance fails to reduce insecurity"]
+    },
+    {
+      "id": "PS-MATTER-001",
+      "title": "Automated fabrication substantially reduces physical scarcity",
+      "claim": "Advanced manufacturing and biofabrication make many physical goods locally producible from common feedstocks with little human labor.",
+      "kind": "prediction",
+      "lane": "biotechnology",
+      "horizon": "medium-to-long",
+      "status": "unassessed",
+      "canon_sources": ["worldbible/technologies/replication-systems.md"],
+      "keywords": ["additive manufacturing", "biofabrication", "cellular agriculture", "robotic manufacturing", "recycling"],
+      "signals_to_watch": ["multi-material printing", "autonomous factories", "cultivated food", "closed-loop material recovery"],
+      "falsifiers": ["feedstock and energy costs remain dominant", "fabrication stays specialized", "automation fails to lower end-to-end scarcity"]
+    },
+    {
+      "id": "PS-ROBOTICS-001",
+      "title": "Embodied AI automates material coordination",
+      "claim": "General-purpose robots and autonomous logistics systems coordinate a growing share of transport, maintenance, construction, and care work.",
+      "kind": "prediction",
+      "lane": "robotics",
+      "horizon": "near-to-medium",
+      "status": "unassessed",
+      "canon_sources": [
+        "worldbible/technologies/robotics.md",
+        "worldbible/technologies/drone-logistics.md"
+      ],
+      "keywords": ["humanoid robots", "robotics", "autonomous logistics", "drones", "dexterity", "robot learning"],
+      "signals_to_watch": ["robot deployment counts", "dexterous manipulation", "robot learning transfer", "cost per productive hour"],
+      "falsifiers": ["robots remain confined to structured environments", "deployment economics fail outside narrow tasks"]
+    },
+    {
+      "id": "PS-SPACE-001",
+      "title": "AI and abundant energy enable sustained off-world settlement",
+      "claim": "Autonomous systems, improved propulsion, and closed-loop life support make long-duration orbital or off-world communities practical.",
+      "kind": "prediction",
+      "lane": "space",
+      "horizon": "long",
+      "status": "unassessed",
+      "canon_sources": ["worldbible/technologies/aerospace-systems.md"],
+      "keywords": ["space habitation", "closed-loop life support", "launch cost", "in-space manufacturing", "autonomous spacecraft"],
+      "signals_to_watch": ["launch cost", "station duration", "life-support closure", "in-space manufacturing", "autonomous mission operations"],
+      "falsifiers": ["human health limits remain unresolved", "closed-loop habitats remain unreliable", "launch economics stop improving"]
+    },
+    {
+      "id": "PS-SOCIAL-001",
+      "title": "Automation shifts status from survival work toward meaning",
+      "claim": "When automation and abundance reduce compulsory labor, social status and personal struggle shift toward care, identity, contribution, and emotional development.",
+      "kind": "assumption",
+      "lane": "social-systems",
+      "horizon": "medium",
+      "status": "unassessed",
+      "canon_sources": [
+        "README.md",
+        "worldbible/timeline.md"
+      ],
+      "keywords": ["future of work", "automation", "meaning", "care economy", "post-scarcity", "identity"],
+      "signals_to_watch": ["working-hour changes", "basic income experiments", "automation displacement", "care and creative participation"],
+      "falsifiers": ["abundance increases compulsory work", "material insecurity remains the dominant organizing force despite automation"]
+    },
+    {
+      "id": "PS-SOCIAL-002",
+      "title": "Analog practices persist as a counterweight to integration",
+      "claim": "Even under pervasive AI and neural technology, people preserve or revive tactile, private, and low-technology practices to protect agency and meaning.",
+      "kind": "prediction",
+      "lane": "social-systems",
+      "horizon": "near-to-medium",
+      "status": "unassessed",
+      "canon_sources": ["worldbible/timeline.md"],
+      "keywords": ["digital detox", "analog revival", "privacy", "offline communities", "human agency"],
+      "signals_to_watch": ["device-free spaces", "right-to-disconnect policy", "analog media growth", "low-tech communities"],
+      "falsifiers": ["analog practices disappear across generations", "full integration faces negligible cultural resistance"]
+    }
+  ]
+}
