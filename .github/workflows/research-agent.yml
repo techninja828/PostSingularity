@@ -44,7 +44,7 @@ jobs:
     timeout-minutes: 45
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5.6' }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5.6-luna' }}
       RESEARCH_TOPIC: ${{ inputs.topic }}
       RESEARCH_LANE: ${{ inputs.lane || 'auto' }}
       LOOKBACK_DAYS: ${{ inputs.lookback_days || '7' }}

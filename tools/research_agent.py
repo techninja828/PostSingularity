@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ASSUMPTIONS_PATH = REPO_ROOT / "research" / "assumptions.json"
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "pending-review" / "agent-research"
 DEFAULT_SUBMISSIONS_LOG = REPO_ROOT / "submissions-log.md"
-DEFAULT_MODEL = "gpt-5.6"
+DEFAULT_MODEL = "gpt-5.6-luna"
 
 Lane = Literal[
     "ai",
