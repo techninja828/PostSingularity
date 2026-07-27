@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 from tools import research_agent as agent
@@ -159,8 +159,19 @@ def test_append_submission_log_row_joins_table(tmp_path: Path) -> None:
     assert lines[table_indices[-1]].startswith("| 0 | research agent |")
 
 
-def test_weekly_rotation_is_deterministic() -> None:
+def test_scheduled_topic_is_deterministic() -> None:
     first = agent.scheduled_topic(date(2026, 7, 26))
     second = agent.scheduled_topic(date(2026, 7, 26))
     assert first == second
     assert first[0] in agent.LANES
+
+
+def test_daily_rotation_cycles_every_lane() -> None:
+    lane_count = len(agent.LANES)
+    lanes = [
+        agent.scheduled_topic(date(2026, 7, 26) + timedelta(days=offset))[0]
+        for offset in range(lane_count)
+    ]
+    # Consecutive days must differ and a full period must cover every lane.
+    assert lanes[0] != lanes[1]
+    assert set(lanes) == set(agent.LANES)
