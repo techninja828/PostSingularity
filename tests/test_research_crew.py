@@ -1,8 +1,12 @@
+import json
 from pathlib import Path
+
+import pytest
 
 from tools import research_crew as crew_module
 from tools.research_agent import (
     ResearchBrief,
+    Source,
     load_assumptions,
     load_canon_files,
     nearby_canon,
@@ -20,6 +24,31 @@ def test_intermediate_schemas_are_strict() -> None:
     assert crew_module.AuditedEvidence.model_config["extra"] == "forbid"
     assert crew_module.AnalysisPacket.model_config["extra"] == "forbid"
 
+
+def test_source_urls_remain_validated_json_strings() -> None:
+    source = Source(
+        id="S1",
+        title="Primary source",
+        url="https://example.com/research",
+        publisher="Example",
+        published_at="2026-07-26",
+        source_type="primary-research",
+        why_relevant="Regression coverage for CrewAI task persistence.",
+    )
+
+    assert source.url == "https://example.com/research"
+    assert json.loads(json.dumps(source.model_dump()))["url"] == source.url
+
+    with pytest.raises(ValueError):
+        Source(
+            id="S2",
+            title="Invalid source",
+            url="not-a-url",
+            publisher="Example",
+            published_at="unknown",
+            source_type="mock",
+            why_relevant="This must fail validation.",
+        )
 
 def test_mock_crew_cli_uses_existing_pipeline(capsys) -> None:
     result = crew_module.main(
