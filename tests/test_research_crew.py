@@ -5,6 +5,7 @@ import pytest
 
 from tools import research_crew as crew_module
 from tools.research_agent import (
+    CanonImplication,
     ResearchBrief,
     Source,
     load_assumptions,
@@ -12,6 +13,22 @@ from tools.research_agent import (
     select_assumptions,
     select_canon_context,
 )
+
+
+def _implication(path: str, heading: str) -> CanonImplication:
+    return CanonImplication(
+        path=path,
+        target_heading=heading,
+        assumption_ids=["PS-AI-001"],
+        source_ids=["S1"],
+        relationship="supports",
+        recommendation="revise",
+        priority="medium",
+        rationale="Regression coverage for the mapping guardrail checks.",
+        proposed_change="Add a qualifying sentence to the target section body.",
+        implementation_steps=["Insert the sentence under the anchor heading."],
+        dependencies_or_conflicts=[],
+    )
 
 
 def test_crewai_model_name_adds_provider_prefix() -> None:
@@ -50,6 +67,36 @@ def test_source_urls_remain_validated_json_strings() -> None:
             source_type="mock",
             why_relevant="This must fail validation.",
         )
+
+
+def test_guardrail_rejects_duplicate_targets() -> None:
+    allowed = {"worldbible/timeline.md": {"cycle 0"}}
+    errors = crew_module.implementation_plan_errors(
+        [
+            _implication("worldbible/timeline.md", "Cycle 0"),
+            _implication("worldbible/timeline.md", "cycle 0"),
+        ],
+        allowed,
+        {"PS-AI-001"},
+        {"S1"},
+        {"PS-AI-001"},
+    )
+    assert any("Duplicate implementation target" in error for error in errors)
+
+
+def test_guardrail_accepts_distinct_valid_targets() -> None:
+    allowed = {"worldbible/timeline.md": {"cycle 0", "cycle 1"}}
+    errors = crew_module.implementation_plan_errors(
+        [
+            _implication("worldbible/timeline.md", "Cycle 0"),
+            _implication("worldbible/timeline.md", "Cycle 1"),
+        ],
+        allowed,
+        {"PS-AI-001"},
+        {"S1"},
+        {"PS-AI-001"},
+    )
+    assert errors == []
 
 
 def test_mock_crew_cli_uses_existing_pipeline(capsys) -> None:

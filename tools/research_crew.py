@@ -79,6 +79,60 @@ def crewai_model_name(model: str) -> str:
     return model if "/" in model else f"openai/{model}"
 
 
+DIRECTIONAL_VERDICTS = {"strengthened", "weakened", "contradicted", "mixed"}
+
+
+def implementation_plan_errors(
+    canon_implications: Sequence[CanonImplication],
+    allowed_headings: dict[str, set[str]],
+    selected_assumption_ids: set[str],
+    known_source_ids: set[str],
+    directional_ids: set[str],
+) -> list[str]:
+    """Deterministic checks the mapper must satisfy, shared by the guardrail.
+
+    Mirrors ``validate_brief``'s constraints — including ``(path, heading)``
+    uniqueness — so the mapper is corrected within its retry budget instead of
+    passing the guardrail and then aborting the run at final validation.
+    """
+    errors: list[str] = []
+    covered_assumptions: set[str] = set()
+    seen_targets: set[tuple[str, str]] = set()
+    for item in canon_implications:
+        if item.path not in allowed_headings:
+            errors.append(f"Unknown repository path: {item.path}")
+            continue
+        if item.target_heading.casefold() not in allowed_headings[item.path]:
+            errors.append(f"Unknown heading in {item.path}: {item.target_heading}")
+        target = (item.path, item.target_heading.casefold())
+        if target in seen_targets:
+            errors.append(
+                f"Duplicate implementation target: {item.path} -> "
+                f"{item.target_heading}. Merge findings for a heading into one "
+                "item or anchor to a different existing heading."
+            )
+        seen_targets.add(target)
+        unknown_assumptions = set(item.assumption_ids) - selected_assumption_ids
+        if unknown_assumptions:
+            errors.append(f"Unselected assumptions: {sorted(unknown_assumptions)}")
+        covered_assumptions.update(item.assumption_ids)
+        unknown_sources = set(item.source_ids) - known_source_ids
+        if unknown_sources:
+            errors.append(f"Unknown source IDs: {sorted(unknown_sources)}")
+        if not item.implementation_steps:
+            errors.append(
+                f"{item.path} -> {item.target_heading} needs implementation steps"
+            )
+
+    uncovered = directional_ids - covered_assumptions
+    if uncovered:
+        errors.append(
+            "Directional assumption assessments need implementation items: "
+            f"{sorted(uncovered)}"
+        )
+    return errors
+
+
 def build_research_crew(
     topic: str,
     lane: str,
@@ -299,37 +353,12 @@ Tracked assumptions:
         if not isinstance(packet, ImplementationPacket):
             return False, "Return a valid typed ImplementationPacket."
 
+        # Sequential process guarantees audit_task/analysis_task have run first.
         known_source_ids: set[str] = set()
         if audit_task.output and isinstance(audit_task.output.pydantic, AuditedEvidence):
             known_source_ids = {
                 source.id for source in audit_task.output.pydantic.sources
             }
-
-        errors: list[str] = []
-        covered_assumptions: set[str] = set()
-        for item in packet.canon_implications:
-            if item.path not in allowed_headings:
-                errors.append(f"Unknown repository path: {item.path}")
-                continue
-            if item.target_heading.casefold() not in allowed_headings[item.path]:
-                errors.append(
-                    f"Unknown heading in {item.path}: {item.target_heading}"
-                )
-            unknown_assumptions = (
-                set(item.assumption_ids) - selected_assumption_ids
-            )
-            if unknown_assumptions:
-                errors.append(
-                    f"Unselected assumptions: {sorted(unknown_assumptions)}"
-                )
-            covered_assumptions.update(item.assumption_ids)
-            unknown_sources = set(item.source_ids) - known_source_ids
-            if unknown_sources:
-                errors.append(f"Unknown source IDs: {sorted(unknown_sources)}")
-            if not item.implementation_steps:
-                errors.append(
-                    f"{item.path} -> {item.target_heading} needs implementation steps"
-                )
 
         directional_ids: set[str] = set()
         if analysis_task.output and isinstance(
@@ -338,16 +367,16 @@ Tracked assumptions:
             directional_ids = {
                 assessment.assumption_id
                 for assessment in analysis_task.output.pydantic.assumption_assessments
-                if assessment.verdict
-                in {"strengthened", "weakened", "contradicted", "mixed"}
+                if assessment.verdict in DIRECTIONAL_VERDICTS
             }
-        uncovered = directional_ids - covered_assumptions
-        if uncovered:
-            errors.append(
-                "Directional assumption assessments need implementation items: "
-                f"{sorted(uncovered)}"
-            )
 
+        errors = implementation_plan_errors(
+            packet.canon_implications,
+            allowed_headings,
+            selected_assumption_ids,
+            known_source_ids,
+            directional_ids,
+        )
         if errors:
             return False, "Repository mapping errors: " + "; ".join(errors)
         return True, task_output

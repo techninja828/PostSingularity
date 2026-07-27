@@ -139,6 +139,26 @@ def test_append_submission_log_is_idempotent(tmp_path: Path) -> None:
     assert text.count("brief.md") == 2
 
 
+def test_append_submission_log_row_joins_table(tmp_path: Path) -> None:
+    report = tmp_path / "pending-review" / "agent-research" / "brief.md"
+    report.parent.mkdir(parents=True)
+    report.write_text("brief", encoding="utf-8")
+    log = tmp_path / "submissions-log.md"
+    log.write_text(
+        "| Cycle | Contributor | File/Idea | Status | Notes |\n"
+        "|---|---|---|---|---|\n"
+        "| 0 | repo setup | pending-review folder | accepted | initial structure |\n"
+        "\nPlease append new rows when submitting.\n",
+        encoding="utf-8",
+    )
+    assert agent.append_submission_log(log, report, "test topic", tmp_path)
+    lines = log.read_text(encoding="utf-8").splitlines()
+    table_indices = [i for i, line in enumerate(lines) if line.startswith("|")]
+    # Every table row must be contiguous so the new entry renders inside the table.
+    assert table_indices == list(range(table_indices[0], table_indices[-1] + 1))
+    assert lines[table_indices[-1]].startswith("| 0 | research agent |")
+
+
 def test_weekly_rotation_is_deterministic() -> None:
     first = agent.scheduled_topic(date(2026, 7, 26))
     second = agent.scheduled_topic(date(2026, 7, 26))
