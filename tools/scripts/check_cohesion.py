@@ -25,11 +25,13 @@ from typing import List, Dict
 
 JSON_BLOCK = re.compile(r"```json\s*(\{.*?\})\s*```", re.DOTALL | re.IGNORECASE)
 CYCLE_REGEX = re.compile(r"cycle\s*(\d+)", re.IGNORECASE)
+EXCLUDED_DIRS = {".git", ".venv", ".pytest_cache", "__pycache__", "node_modules"}
 
 
 def collect_markdown_files(root: str) -> List[str]:
     files = []
-    for dirpath, _, filenames in os.walk(root):
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames[:] = [name for name in dirnames if name not in EXCLUDED_DIRS]
         for name in filenames:
             if name.lower().endswith(".md"):
                 files.append(os.path.join(dirpath, name))
