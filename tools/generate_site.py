@@ -1,6 +1,7 @@
 # Simple static site generator. Requires Python markdown package.
 # Converts repo Markdown files to HTML in the "site" directory.
 import os
+import sys
 import json
 import markdown
 import re
@@ -33,7 +34,11 @@ def extract_metadata(md_path):
         return None
     try:
         return json.loads(m.group(1))
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as exc:
+        print(
+            f"Warning: malformed JSON metadata in {md_path}: {exc}",
+            file=sys.stderr,
+        )
         return None
 
 
