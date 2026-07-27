@@ -18,7 +18,7 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterable, Literal, Sequence
 
-from pydantic import BaseModel, ConfigDict, Field, HttpUrl
+from pydantic import BaseModel, ConfigDict, Field, HttpUrl, field_validator
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -149,7 +149,10 @@ class StrictModel(BaseModel):
 class Source(StrictModel):
     id: str = Field(description="Short stable identifier such as S1")
     title: str
-    url: HttpUrl
+    url: str = Field(
+        pattern=r"^https?://",
+        description="Absolute HTTP or HTTPS source URL",
+    )
     publisher: str
     published_at: str = Field(description="ISO date when known, otherwise 'unknown'")
     source_type: Literal[
@@ -161,6 +164,12 @@ class Source(StrictModel):
         "mock",
     ]
     why_relevant: str
+
+    @field_validator("url")
+    @classmethod
+    def normalize_url(cls, value: str) -> str:
+        """Keep validated URLs JSON-native for CrewAI task persistence."""
+        return str(HttpUrl(value))
 
 
 class Development(StrictModel):
