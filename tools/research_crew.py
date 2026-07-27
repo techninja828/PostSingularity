@@ -4,12 +4,15 @@
 from __future__ import annotations
 
 import json
-import os
 import sys
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import Any, Sequence
 
 from pydantic import Field
+
+if __package__ in (None, ""):  # direct execution: python tools/research_crew.py
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from tools.research_agent import (
     AssumptionAssessment,
@@ -17,20 +20,16 @@ from tools.research_agent import (
     DEFAULT_MODEL,
     Development,
     ResearchBrief,
+    ResearchRun,
     Source,
     StrictModel,
-    append_submission_log,
-    build_mock_brief,
+    assumption_payload,
     build_parser,
-    format_memo,
-    infer_lane,
-    load_assumptions,
-    load_canon_files,
-    scheduled_topic,
-    select_assumptions,
-    select_canon_context,
+    canon_payload,
+    heading_index,
+    require_openai_api_key,
+    run_research_cli,
     validate_brief,
-    write_memo,
 )
 
 
@@ -78,41 +77,6 @@ class ImplementationPacket(StrictModel):
 def crewai_model_name(model: str) -> str:
     """Normalize an OpenAI model for CrewAI's provider-prefixed format."""
     return model if "/" in model else f"openai/{model}"
-
-
-def _selected_assumption_json(assumptions: Sequence[dict[str, Any]]) -> str:
-    fields = (
-        "id",
-        "title",
-        "claim",
-        "kind",
-        "horizon",
-        "status",
-        "canon_sources",
-        "signals_to_watch",
-        "falsifiers",
-    )
-    return json.dumps(
-        [{field: item.get(field) for field in fields} for item in assumptions],
-        indent=2,
-    )
-
-
-def _canon_context_json(canon_matches: Sequence[Any]) -> str:
-    return json.dumps(
-        [
-            {
-                "path": match.path,
-                "title": match.title,
-                "why_nearby": match.reason,
-                "declared_for_assumptions": list(match.assumption_ids),
-                "existing_headings": list(match.headings),
-                "excerpt": match.excerpt,
-            }
-            for match in canon_matches
-        ],
-        indent=2,
-    )
 
 
 DIRECTIONAL_VERDICTS = {"strengthened", "weakened", "contradicted", "mixed"}
@@ -305,8 +269,8 @@ def build_research_crew(
 
     run_date = datetime.now(timezone.utc).date()
     start_date = run_date - timedelta(days=lookback_days)
-    assumption_json = _selected_assumption_json(assumptions)
-    canon_json = _canon_context_json(canon_matches)
+    assumption_json = json.dumps(assumption_payload(assumptions), indent=2)
+    canon_json = json.dumps(canon_payload(canon_matches), indent=2)
 
     signal_task = Task(
         description=f"""Independently research the most material developments for:
@@ -381,10 +345,7 @@ Tracked assumptions:
         output_pydantic=AnalysisPacket,
     )
 
-    allowed_headings = {
-        match.path: {heading.casefold() for heading in match.headings}
-        for match in canon_matches
-    }
+    allowed_headings = heading_index(canon_matches)
     selected_assumption_ids = {assumption["id"] for assumption in assumptions}
 
     def implementation_guardrail(task_output):
@@ -519,10 +480,7 @@ def run_crew_research(
     reasoning_effort: str,
     verbose: bool,
 ) -> ResearchBrief:
-    if not os.environ.get("OPENAI_API_KEY"):
-        raise RuntimeError(
-            "OPENAI_API_KEY is not set. Configure it or use --mock for a non-API run."
-        )
+    require_openai_api_key()
     crew, editor_task = build_research_crew(
         topic,
         lane,
@@ -559,76 +517,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.lookback_days < 1:
         parser.error("--lookback-days must be at least 1")
 
-    try:
-        assumptions = load_assumptions(args.assumptions_file)
-        if args.list_assumptions:
-            for item in assumptions:
-                print(f"{item['id']}\t{item['lane']}\t{item['status']}\t{item['title']}")
-            return 0
-
-        run_date = datetime.now(timezone.utc).date()
-        if args.topic:
-            topic = args.topic.strip()
-            lane = infer_lane(topic, assumptions) if args.lane == "auto" else args.lane
-        else:
-            lane, topic = scheduled_topic(run_date, args.lane)
-
-        selected = select_assumptions(
-            topic,
-            lane,
-            assumptions,
-            requested_ids=args.assumption,
+    def live_runner(run: ResearchRun) -> tuple[ResearchBrief, set[str]]:
+        brief = run_crew_research(
+            run.topic,
+            run.lane,
+            run.lookback_days,
+            run.assumptions,
+            run.canon_matches,
+            args.model,
+            args.reasoning_effort,
+            args.verbose_crew,
         )
-        canon_matches = select_canon_context(
-            topic,
-            lane,
-            load_canon_files(),
-            selected,
-        )
+        return brief, set()
 
-        if args.mock:
-            brief = build_mock_brief(
-                topic,
-                lane,
-                selected,
-                canon_matches,
-                run_date,
-                args.lookback_days,
-            )
-            validate_brief(brief, selected, canon_matches)
-        else:
-            brief = run_crew_research(
-                topic,
-                lane,
-                args.lookback_days,
-                selected,
-                canon_matches,
-                args.model,
-                args.reasoning_effort,
-                args.verbose_crew,
-            )
-
-        markdown = format_memo(
-            brief,
-            topic,
-            selected,
-            canon_matches,
-            run_date,
-            f"CrewAI/{args.model}",
-            args.mock,
-        )
-        if args.dry_run:
-            print(markdown)
-            return 0
-
-        report_path = write_memo(markdown, topic, lane, args.output_dir, run_date)
-        if not args.no_log:
-            append_submission_log(args.submissions_log, report_path, topic)
-        print(report_path)
-        return 0
-    except (OSError, ValueError, RuntimeError, json.JSONDecodeError) as exc:
-        print(f"research crew error: {exc}", file=sys.stderr)
-        return 1
+    return run_research_cli(
+        args,
+        live_runner,
+        f"CrewAI/{args.model}",
+        "research crew error",
+    )
 
 
 if __name__ == "__main__":

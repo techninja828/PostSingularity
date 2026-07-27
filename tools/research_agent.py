@@ -16,9 +16,14 @@ import sys
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any, Iterable, Literal, Sequence
+from typing import Any, Callable, Iterable, Literal, Sequence
 
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, field_validator
+
+if __package__ in (None, ""):  # direct execution: python tools/research_agent.py
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from tools.markdown_utils import extract_headings, extract_title, parse_tags
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -234,27 +239,6 @@ def slugify(value: str) -> str:
     """Return a lowercase, filesystem-safe slug."""
     value = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
     return value or "research-brief"
-
-
-def parse_tags(text: str) -> tuple[str, ...]:
-    """Extract a Markdown ``Tags: [a], [b]`` line."""
-    match = re.search(r"^tags\s*:\s*(.+)$", text, re.IGNORECASE | re.MULTILINE)
-    if not match:
-        return ()
-    return tuple(tag.strip().lower() for tag in re.findall(r"\[([^\]]+)\]", match.group(1)))
-
-
-def extract_title(text: str, fallback: str) -> str:
-    match = re.search(r"^#\s+(.+)$", text, re.MULTILINE)
-    return match.group(1).strip() if match else fallback
-
-
-def extract_headings(text: str) -> tuple[str, ...]:
-    """Return Markdown headings without their leading hash marks."""
-    return tuple(
-        match.group(1).strip()
-        for match in re.finditer(r"^#{1,6}\s+(.+?)\s*$", text, re.MULTILINE)
-    )
 
 
 def tokenize(value: str) -> set[str]:
@@ -538,30 +522,32 @@ def select_assumptions(
     return [item[2] for item in ranked[:limit]]
 
 
-def build_prompt(
-    topic: str,
-    lane: str,
-    lookback_days: int,
+ASSUMPTION_PAYLOAD_FIELDS = (
+    "id",
+    "title",
+    "claim",
+    "kind",
+    "horizon",
+    "status",
+    "canon_sources",
+    "signals_to_watch",
+    "falsifiers",
+)
+
+
+def assumption_payload(
     assumptions: Sequence[dict[str, Any]],
-    canon_matches: Sequence[CanonMatch],
-    run_date: date,
-) -> list[dict[str, str]]:
-    start_date = run_date - timedelta(days=lookback_days)
-    assumption_payload = [
-        {
-            "id": item["id"],
-            "title": item["title"],
-            "claim": item["claim"],
-            "kind": item["kind"],
-            "horizon": item.get("horizon"),
-            "status": item["status"],
-            "canon_sources": item["canon_sources"],
-            "signals_to_watch": item["signals_to_watch"],
-            "falsifiers": item["falsifiers"],
-        }
+) -> list[dict[str, Any]]:
+    """Return the prompt-facing view of tracked assumptions."""
+    return [
+        {field: item.get(field) for field in ASSUMPTION_PAYLOAD_FIELDS}
         for item in assumptions
     ]
-    canon_payload = [
+
+
+def canon_payload(canon_matches: Sequence[CanonMatch]) -> list[dict[str, Any]]:
+    """Return the prompt-facing view of nearby canon."""
+    return [
         {
             "path": match.path,
             "title": match.title,
@@ -572,6 +558,32 @@ def build_prompt(
         }
         for match in canon_matches
     ]
+
+
+def heading_index(canon_matches: Sequence[CanonMatch]) -> dict[str, set[str]]:
+    """Map each supplied canon path to its case-folded headings."""
+    return {
+        match.path: {heading.casefold() for heading in match.headings}
+        for match in canon_matches
+    }
+
+
+def require_openai_api_key() -> None:
+    if not os.environ.get("OPENAI_API_KEY"):
+        raise RuntimeError(
+            "OPENAI_API_KEY is not set. Configure it or use --mock for a non-API run."
+        )
+
+
+def build_prompt(
+    topic: str,
+    lane: str,
+    lookback_days: int,
+    assumptions: Sequence[dict[str, Any]],
+    canon_matches: Sequence[CanonMatch],
+    run_date: date,
+) -> list[dict[str, str]]:
+    start_date = run_date - timedelta(days=lookback_days)
     system = """You are the evidence analyst for the PostSingularity speculative
 storyworld. Search the web and evaluate real developments without trying to
 defend the fiction.
@@ -602,10 +614,10 @@ Prioritize developments inside the lookback window. Older evidence is allowed
 only when it is necessary to interpret a recent development.
 
 Tracked assumptions:
-{json.dumps(assumption_payload, indent=2)}
+{json.dumps(assumption_payload(assumptions), indent=2)}
 
 Nearby PostSingularity canon:
-{json.dumps(canon_payload, indent=2)}
+{json.dumps(canon_payload(canon_matches), indent=2)}
 
 Produce a decision-useful research brief. Explain what changed, how strong the
 evidence is, which assumptions are strengthened or weakened, and exactly where
@@ -671,10 +683,10 @@ def validate_brief(
                 f"{assessment.assumption_id} cites unknown sources: {sorted(missing)}"
             )
 
-    allowed_canon = {match.path: match for match in canon_matches}
+    allowed_headings = heading_index(canon_matches)
     seen_targets: set[tuple[str, str]] = set()
     for implication in brief.canon_implications:
-        if allowed_canon and implication.path not in allowed_canon:
+        if allowed_headings and implication.path not in allowed_headings:
             raise ValueError(
                 f"Canon plan references a file outside supplied context: {implication.path}"
             )
@@ -690,11 +702,8 @@ def validate_brief(
                 f"Canon plan for {implication.path} cites unknown sources: "
                 f"{sorted(missing_sources)}"
             )
-        if allowed_canon:
-            headings = {
-                heading.casefold() for heading in allowed_canon[implication.path].headings
-            }
-            if implication.target_heading.casefold() not in headings:
+        if allowed_headings:
+            if implication.target_heading.casefold() not in allowed_headings[implication.path]:
                 raise ValueError(
                     f"Unknown target heading in {implication.path}: "
                     f"{implication.target_heading}"
@@ -715,10 +724,7 @@ def run_live_research(
     model: str,
     reasoning_effort: str,
 ) -> tuple[ResearchBrief, set[str]]:
-    if not os.environ.get("OPENAI_API_KEY"):
-        raise RuntimeError(
-            "OPENAI_API_KEY is not set. Configure it or use --mock for a non-API run."
-        )
+    require_openai_api_key()
 
     from openai import OpenAI
 
@@ -1100,12 +1106,59 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: Sequence[str] | None = None) -> int:
-    parser = build_parser()
-    args = parser.parse_args(argv)
-    if args.lookback_days < 1:
-        parser.error("--lookback-days must be at least 1")
+@dataclass(frozen=True)
+class ResearchRun:
+    """Everything a research backend needs for one CLI invocation."""
 
+    topic: str
+    lane: str
+    lookback_days: int
+    assumptions: list[dict[str, Any]]
+    canon_matches: list[CanonMatch]
+    run_date: date
+
+
+def prepare_research_run(
+    args: argparse.Namespace,
+    assumptions: Sequence[dict[str, Any]],
+    run_date: date,
+) -> ResearchRun:
+    """Resolve the topic, lane, tracked assumptions, and canon context."""
+    if args.topic:
+        topic = args.topic.strip()
+        lane = infer_lane(topic, assumptions) if args.lane == "auto" else args.lane
+    else:
+        lane, topic = scheduled_topic(run_date, args.lane)
+
+    selected = select_assumptions(
+        topic,
+        lane,
+        assumptions,
+        requested_ids=args.assumption,
+    )
+    canon_matches = select_canon_context(
+        topic,
+        lane,
+        load_canon_files(),
+        selected,
+    )
+    return ResearchRun(
+        topic=topic,
+        lane=lane,
+        lookback_days=args.lookback_days,
+        assumptions=list(selected),
+        canon_matches=list(canon_matches),
+        run_date=run_date,
+    )
+
+
+def run_research_cli(
+    args: argparse.Namespace,
+    live_runner: Callable[[ResearchRun], tuple[ResearchBrief, set[str]]],
+    model_label: str,
+    error_label: str,
+) -> int:
+    """Run the shared assumption research pipeline around a research backend."""
     try:
         assumptions = load_assumptions(args.assumptions_file)
         if args.list_assumptions:
@@ -1113,56 +1166,29 @@ def main(argv: Sequence[str] | None = None) -> int:
                 print(f"{item['id']}\t{item['lane']}\t{item['status']}\t{item['title']}")
             return 0
 
-        run_date = datetime.now(timezone.utc).date()
-        if args.topic:
-            topic = args.topic.strip()
-            lane = infer_lane(topic, assumptions) if args.lane == "auto" else args.lane
-        else:
-            lane, topic = scheduled_topic(run_date, args.lane)
-
-        selected = select_assumptions(
-            topic,
-            lane,
-            assumptions,
-            requested_ids=args.assumption,
-        )
-        canon_matches = select_canon_context(
-            topic,
-            lane,
-            load_canon_files(),
-            selected,
-        )
+        run = prepare_research_run(args, assumptions, datetime.now(timezone.utc).date())
 
         if args.mock:
             brief = build_mock_brief(
-                topic,
-                lane,
-                selected,
-                canon_matches,
-                run_date,
-                args.lookback_days,
+                run.topic,
+                run.lane,
+                run.assumptions,
+                run.canon_matches,
+                run.run_date,
+                run.lookback_days,
             )
-            validate_brief(brief, selected, canon_matches)
+            validate_brief(brief, run.assumptions, run.canon_matches)
             native_citations: set[str] = set()
         else:
-            brief, native_citations = run_live_research(
-                topic,
-                lane,
-                args.lookback_days,
-                selected,
-                canon_matches,
-                run_date,
-                args.model,
-                args.reasoning_effort,
-            )
+            brief, native_citations = live_runner(run)
 
         markdown = format_memo(
             brief,
-            topic,
-            selected,
-            canon_matches,
-            run_date,
-            args.model,
+            run.topic,
+            run.assumptions,
+            run.canon_matches,
+            run.run_date,
+            model_label,
             args.mock,
             native_citations,
         )
@@ -1170,14 +1196,37 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(markdown)
             return 0
 
-        report_path = write_memo(markdown, topic, lane, args.output_dir, run_date)
+        report_path = write_memo(
+            markdown, run.topic, run.lane, args.output_dir, run.run_date
+        )
         if not args.no_log:
-            append_submission_log(args.submissions_log, report_path, topic)
+            append_submission_log(args.submissions_log, report_path, run.topic)
         print(report_path)
         return 0
     except (OSError, ValueError, RuntimeError, json.JSONDecodeError) as exc:
-        print(f"research agent error: {exc}", file=sys.stderr)
+        print(f"{error_label}: {exc}", file=sys.stderr)
         return 1
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if args.lookback_days < 1:
+        parser.error("--lookback-days must be at least 1")
+
+    def live_runner(run: ResearchRun) -> tuple[ResearchBrief, set[str]]:
+        return run_live_research(
+            run.topic,
+            run.lane,
+            run.lookback_days,
+            run.assumptions,
+            run.canon_matches,
+            run.run_date,
+            args.model,
+            args.reasoning_effort,
+        )
+
+    return run_research_cli(args, live_runner, args.model, "research agent error")
 
 
 if __name__ == "__main__":

@@ -1,10 +1,16 @@
 # Simple static site generator. Requires Python markdown package.
 # Converts repo Markdown files to HTML in the "site" directory.
 import os
-import sys
-import json
-import markdown
 import re
+import sys
+from pathlib import Path
+
+import markdown
+
+if __package__ in (None, ""):  # direct execution: python tools/generate_site.py
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from tools.markdown_utils import collect_markdown_files, first_json_block, read_text
 
 TEMPLATE = """<!DOCTYPE html>
 <html>
@@ -22,24 +28,10 @@ TEMPLATE = """<!DOCTYPE html>
 
 LINK_RE = re.compile(r'href="([^"]+\.md)"')
 
-JSON_RE = re.compile(r'```json\s*(\{.*?\})\s*```', re.DOTALL)
-
 
 def extract_metadata(md_path):
     """Return metadata dict from a markdown file or None."""
-    with open(md_path, 'r', encoding='utf-8') as f:
-        text = f.read()
-    m = JSON_RE.search(text)
-    if not m:
-        return None
-    try:
-        return json.loads(m.group(1))
-    except json.JSONDecodeError as exc:
-        print(
-            f"Warning: malformed JSON metadata in {md_path}: {exc}",
-            file=sys.stderr,
-        )
-        return None
+    return first_json_block(read_text(md_path), source=md_path)
 
 
 def character_links_md(metadata):
@@ -65,16 +57,10 @@ def relative_prefix(relpath):
     return '../' * len(parts)
 
 
-def convert_file(md_path, output_path):
-    with open(md_path, 'r', encoding='utf-8') as f:
-        text = f.read()
-    html_body = markdown.markdown(text, extensions=['extra'])
-    html_body = convert_links(html_body)
-
-    rel = os.path.relpath(output_path, 'site')
-    prefix = relative_prefix(rel)
-
-    title = os.path.splitext(os.path.basename(md_path))[0].replace('-', ' ').title()
+def render_page(text, output_path, title):
+    """Render Markdown text into the site template at output_path."""
+    html_body = convert_links(markdown.markdown(text, extensions=['extra']))
+    prefix = relative_prefix(os.path.relpath(output_path, 'site'))
     content = TEMPLATE.format(prefix=prefix, title=title, body=html_body)
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -82,39 +68,32 @@ def convert_file(md_path, output_path):
         f.write(content)
 
 
+def default_title(md_path):
+    return os.path.splitext(os.path.basename(md_path))[0].replace('-', ' ').title()
+
+
+def convert_file(md_path, output_path):
+    render_page(read_text(md_path), output_path, default_title(md_path))
+
+
 def convert_character_index(md_path, output_path, metadata):
     """Convert characters/index.md inserting generated links."""
-    with open(md_path, 'r', encoding='utf-8') as f:
-        text = f.read()
+    text = read_text(md_path)
 
     # Replace manual bullet list after the heading
     text = re.sub(r'(###\s*Character Links\n)(?:\s*\n)?(?:\s*-.*\n)+',
                   r'\1' + character_links_md(metadata) + '\n', text)
 
-    html_body = markdown.markdown(text, extensions=['extra'])
-    html_body = convert_links(html_body)
-
-    rel = os.path.relpath(output_path, 'site')
-    prefix = relative_prefix(rel)
-    title = 'Character Index'
-    content = TEMPLATE.format(prefix=prefix, title=title, body=html_body)
-
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(content)
+    render_page(text, output_path, 'Character Index')
 
 
 def main():
     metadata = {}
-    md_files = []
-    for root, _, files in os.walk('.'):  # scan repo
-        for name in files:
-            if name.endswith('.md'):
-                md_path = os.path.join(root, name)
-                md_files.append(md_path)
-                meta = extract_metadata(md_path)
-                if meta:
-                    metadata[md_path] = meta
+    md_files = collect_markdown_files('.')
+    for md_path in md_files:
+        meta = extract_metadata(md_path)
+        if meta:
+            metadata[md_path] = meta
 
     for md_path in md_files:
         rel_path = os.path.relpath(md_path, '.')
