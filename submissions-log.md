@@ -7,6 +7,8 @@ This file tracks contributions, particularly those placed in `pending-review/`.
 |-------|-------------|----------|--------|-------|
 | 0 | repo setup | pending-review folder | accepted | initial structure |
 
+| 0 | research agent | [2026-07-27-social-systems-automation-future-of-work-meaning-digital-resistance-and-social-.md](pending-review/agent-research/2026-07-27-social-systems-automation-future-of-work-meaning-digital-resistance-and-social-.md) | pending | automation, future of work, meaning, digital resistance, and social adaptation |
+
 Please append new rows when submitting or revising ideas. Use cycle numbering consistent with other metadata files.
 
 ```json
