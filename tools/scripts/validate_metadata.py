@@ -17,39 +17,40 @@ Any file missing either requirement will be listed and the program exits with
 status 1.
 """
 
-import os
-import re
 import sys
-from typing import List
+from pathlib import Path
 
-TAG_REGEX = re.compile(r'^tags\s*:', re.IGNORECASE | re.MULTILINE)
-JSON_BLOCK_REGEX = re.compile(r'```json', re.IGNORECASE)
-EXCLUDED_DIRS = {'.git', '.venv', '.pytest_cache', '__pycache__', 'node_modules'}
+if __package__ in (None, ""):  # direct execution: python tools/scripts/validate_metadata.py
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from tools.markdown_utils import (
+    EXCLUDED_DIRS,
+    collect_markdown_files,
+    has_json_block,
+    has_tag_line,
+    read_text,
+)
+
+__all__ = [
+    "EXCLUDED_DIRS",
+    "collect_markdown_files",
+    "has_required_metadata",
+    "check_file",
+    "main",
+]
 
 
 def has_required_metadata(text: str) -> bool:
     """Return True if text contains both a Tags line and a JSON block."""
-    return bool(TAG_REGEX.search(text)) and bool(JSON_BLOCK_REGEX.search(text))
+    return has_tag_line(text) and has_json_block(text)
 
 
 def check_file(path: str) -> bool:
-    try:
-        with open(path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        return has_required_metadata(content)
-    except Exception as e:
-        print(f"Error reading {path}: {e}")
+    content = read_text(path)
+    if content is None:
+        print(f"Error reading {path}")
         return False
-
-
-def collect_markdown_files(root: str) -> List[str]:
-    result = []
-    for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [name for name in dirnames if name not in EXCLUDED_DIRS]
-        for filename in filenames:
-            if filename.lower().endswith('.md'):
-                result.append(os.path.join(dirpath, filename))
-    return result
+    return has_required_metadata(content)
 
 
 def main():

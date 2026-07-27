@@ -17,46 +17,37 @@ Usage:
     python tools/scripts/check_cohesion.py [root]
 """
 
-import json
 import os
 import re
 import sys
-from typing import List, Dict
+from pathlib import Path
+from typing import Dict, List
 
-JSON_BLOCK = re.compile(r"```json\s*(\{.*?\})\s*```", re.DOTALL | re.IGNORECASE)
+if __package__ in (None, ""):  # direct execution: python tools/scripts/check_cohesion.py
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from tools.markdown_utils import (
+    EXCLUDED_DIRS,
+    collect_markdown_files,
+    extract_json_blocks,
+    read_text,
+)
+
 CYCLE_REGEX = re.compile(r"cycle\s*(\d+)", re.IGNORECASE)
-EXCLUDED_DIRS = {".git", ".venv", ".pytest_cache", "__pycache__", "node_modules"}
 
-
-def collect_markdown_files(root: str) -> List[str]:
-    files = []
-    for dirpath, dirnames, filenames in os.walk(root):
-        dirnames[:] = [name for name in dirnames if name not in EXCLUDED_DIRS]
-        for name in filenames:
-            if name.lower().endswith(".md"):
-                files.append(os.path.join(dirpath, name))
-    return files
+__all__ = ["EXCLUDED_DIRS", "collect_markdown_files", "extract_metadata", "load_cycles", "main"]
 
 
 def extract_metadata(path: str) -> List[Dict]:
-    try:
-        text = open(path, "r", encoding="utf-8").read()
-    except Exception:
+    text = read_text(path)
+    if text is None:
         return []
-    blocks = JSON_BLOCK.findall(text)
-    metadata = []
-    for block in blocks:
-        try:
-            metadata.append(json.loads(block))
-        except json.JSONDecodeError:
-            pass
-    return metadata
+    return extract_json_blocks(text)
 
 
 def load_cycles(timeline_path: str) -> List[int]:
-    try:
-        text = open(timeline_path, "r", encoding="utf-8").read()
-    except Exception:
+    text = read_text(timeline_path)
+    if text is None:
         return []
     return [int(m) for m in CYCLE_REGEX.findall(text)]
 
