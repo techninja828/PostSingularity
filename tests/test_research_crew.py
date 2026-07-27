@@ -9,8 +9,8 @@ from tools.research_agent import (
     Source,
     load_assumptions,
     load_canon_files,
-    nearby_canon,
     select_assumptions,
+    select_canon_context,
 )
 
 
@@ -23,6 +23,7 @@ def test_intermediate_schemas_are_strict() -> None:
     assert crew_module.EvidencePacket.model_config["extra"] == "forbid"
     assert crew_module.AuditedEvidence.model_config["extra"] == "forbid"
     assert crew_module.AnalysisPacket.model_config["extra"] == "forbid"
+    assert crew_module.ImplementationPacket.model_config["extra"] == "forbid"
 
 
 def test_source_urls_remain_validated_json_strings() -> None:
@@ -50,6 +51,7 @@ def test_source_urls_remain_validated_json_strings() -> None:
             why_relevant="This must fail validation.",
         )
 
+
 def test_mock_crew_cli_uses_existing_pipeline(capsys) -> None:
     result = crew_module.main(
         [
@@ -67,13 +69,18 @@ def test_mock_crew_cli_uses_existing_pipeline(capsys) -> None:
     assert "Non-canonical research draft" in output
 
 
-def test_build_research_crew_has_five_bounded_roles(monkeypatch) -> None:
+def test_build_research_crew_has_six_bounded_roles(monkeypatch) -> None:
     monkeypatch.setenv("OPENAI_API_KEY", "test-only-not-a-real-key")
     monkeypatch.setenv("OTEL_SDK_DISABLED", "true")
     topic = "AI agents and persistent memory"
     assumptions = load_assumptions()
     selected = select_assumptions(topic, "ai", assumptions)
-    matches = nearby_canon(topic, "ai", load_canon_files())
+    matches = select_canon_context(
+        topic,
+        "ai",
+        load_canon_files(),
+        selected,
+    )
 
     crew, final_task = crew_module.build_research_crew(
         topic,
@@ -84,8 +91,9 @@ def test_build_research_crew_has_five_bounded_roles(monkeypatch) -> None:
         verbose=False,
     )
 
-    assert len(crew.agents) == 5
-    assert len(crew.tasks) == 5
+    assert len(crew.agents) == 6
+    assert len(crew.tasks) == 6
+    assert crew.tasks[-2].output_pydantic is crew_module.ImplementationPacket
     assert final_task.output_pydantic is ResearchBrief
     assert all(agent.allow_delegation is False for agent in crew.agents)
 

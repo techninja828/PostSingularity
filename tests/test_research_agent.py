@@ -42,13 +42,43 @@ def test_nearby_canon_explains_why_files_match() -> None:
     assert matches
     assert any(match.path.endswith("ai-agents.md") for match in matches)
     assert all(match.reason for match in matches)
+    assert all(match.headings for match in matches)
+
+
+def test_canon_context_guarantees_declared_assumption_sources() -> None:
+    assumptions = agent.load_assumptions()
+    selected = agent.select_assumptions(
+        "automation, future of work, meaning, and social adaptation",
+        "social-systems",
+        assumptions,
+    )
+    matches = agent.select_canon_context(
+        "automation, future of work, meaning, and social adaptation",
+        "social-systems",
+        agent.load_canon_files(),
+        selected,
+    )
+
+    declared_paths = {
+        path for assumption in selected for path in assumption["canon_sources"]
+    }
+    matched_paths = {match.path for match in matches}
+    assert declared_paths <= matched_paths
+    assert all(match.headings for match in matches)
+    assert all(match.excerpt for match in matches)
+    assert any(match.assumption_ids for match in matches)
 
 
 def test_mock_brief_formats_as_metadata_valid_markdown() -> None:
     assumptions = agent.load_assumptions()
     topic = "AI agent memory and consent"
     selected = agent.select_assumptions(topic, "ai", assumptions)
-    matches = agent.nearby_canon(topic, "ai", agent.load_canon_files())
+    matches = agent.select_canon_context(
+        topic,
+        "ai",
+        agent.load_canon_files(),
+        selected,
+    )
     brief = agent.build_mock_brief(
         topic,
         "ai",
@@ -68,8 +98,19 @@ def test_mock_brief_formats_as_metadata_valid_markdown() -> None:
     )
     assert "MOCK - synthetic test data" in markdown
     assert "PS-AI-002" in markdown
+    assert "## Canon Implementation Plan" in markdown
+    assert "Proposed change:" in markdown
+    assert "Implementation steps:" in markdown
     assert agent.parse_tags(markdown)
     assert "```json" in markdown
+
+    brief.canon_implications[0].target_heading = "Invented heading"
+    try:
+        agent.validate_brief(brief, selected, matches)
+    except ValueError as exc:
+        assert "Unknown target heading" in str(exc)
+    else:
+        raise AssertionError("Invented repository headings must be rejected")
 
 
 def test_write_memo_avoids_overwrite(tmp_path: Path) -> None:

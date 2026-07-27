@@ -26,9 +26,9 @@ from tools.research_agent import (
     infer_lane,
     load_assumptions,
     load_canon_files,
-    nearby_canon,
     scheduled_topic,
     select_assumptions,
+    select_canon_context,
     validate_brief,
     write_memo,
 )
@@ -59,11 +59,19 @@ class AuditedEvidence(StrictModel):
 
 class AnalysisPacket(StrictModel):
     assumption_assessments: list[AssumptionAssessment]
-    canon_implications: list[CanonImplication]
     uncertainties: list[str]
     watchlist: list[str]
     daily_change_summary: str = Field(
         description="What is meaningfully new since the prior state, without hype"
+    )
+
+
+class ImplementationPacket(StrictModel):
+    canon_implications: list[CanonImplication]
+    coverage_notes: list[str] = Field(
+        description=(
+            "Explanation for assessed assumptions that do not warrant a repository edit"
+        )
     )
 
 
@@ -97,6 +105,8 @@ def _canon_context_json(canon_matches: Sequence[Any]) -> str:
                 "path": match.path,
                 "title": match.title,
                 "why_nearby": match.reason,
+                "declared_for_assumptions": list(match.assumption_ids),
+                "existing_headings": list(match.headings),
                 "excerpt": match.excerpt,
             }
             for match in canon_matches
@@ -205,6 +215,23 @@ def build_research_crew(
         verbose=verbose,
         max_iter=6,
     )
+    repository_mapper = Agent(
+        role="PostSingularity Repository Implementation Mapper",
+        goal=(
+            "Translate reviewed evidence into exact, actionable repository edit "
+            "plans tied to existing files, headings, assumptions, and source IDs."
+        ),
+        backstory=(
+            "You are the storyworld's information architect and change planner. "
+            "You understand that naming a nearby file is not enough: every proposal "
+            "must identify the exact anchor, explain why it belongs there, describe "
+            "the edit, and surface dependencies or canon conflicts."
+        ),
+        llm=analysis_llm,
+        allow_delegation=False,
+        verbose=verbose,
+        max_iter=6,
+    )
     canon_editor = Agent(
         role="Research Brief and Canon Review Editor",
         goal=(
@@ -286,21 +313,119 @@ claims that should be excluded. Do not invent replacement sources or URLs.""",
         description=f"""Assess every supplied assumption ID against the audited
 evidence. Return exactly one assessment per assumption. A lack of evidence must
 produce an insufficient-evidence verdict, not omission. Separate the real-world
-implication from the PostSingularity implication. Recommend only monitor,
-revise, debate, or no-change for canon.
+implication from the PostSingularity implication. Concentrate on the strength
+and direction of evidence; the repository mapper will decide where changes belong.
 
 Tracked assumptions:
-{assumption_json}
-
-Nearby canon:
-{canon_json}""",
+{assumption_json}""",
         expected_output=(
-            "An AnalysisPacket covering every selected assumption, canon review "
-            "implications, uncertainty, a watchlist, and a sober daily change summary."
+            "An AnalysisPacket covering every selected assumption, uncertainty, "
+            "a watchlist, and a sober daily change summary."
         ),
         agent=assumption_analyst,
         context=[audit_task],
         output_pydantic=AnalysisPacket,
+    )
+
+    allowed_headings = {
+        match.path: {heading.casefold() for heading in match.headings}
+        for match in canon_matches
+    }
+    selected_assumption_ids = {assumption["id"] for assumption in assumptions}
+
+    def implementation_guardrail(task_output):
+        packet = task_output.pydantic
+        if not isinstance(packet, ImplementationPacket):
+            return False, "Return a valid typed ImplementationPacket."
+
+        known_source_ids: set[str] = set()
+        if audit_task.output and isinstance(audit_task.output.pydantic, AuditedEvidence):
+            known_source_ids = {
+                source.id for source in audit_task.output.pydantic.sources
+            }
+
+        errors: list[str] = []
+        covered_assumptions: set[str] = set()
+        for item in packet.canon_implications:
+            if item.path not in allowed_headings:
+                errors.append(f"Unknown repository path: {item.path}")
+                continue
+            if item.target_heading.casefold() not in allowed_headings[item.path]:
+                errors.append(
+                    f"Unknown heading in {item.path}: {item.target_heading}"
+                )
+            unknown_assumptions = (
+                set(item.assumption_ids) - selected_assumption_ids
+            )
+            if unknown_assumptions:
+                errors.append(
+                    f"Unselected assumptions: {sorted(unknown_assumptions)}"
+                )
+            covered_assumptions.update(item.assumption_ids)
+            unknown_sources = set(item.source_ids) - known_source_ids
+            if unknown_sources:
+                errors.append(f"Unknown source IDs: {sorted(unknown_sources)}")
+            if not item.implementation_steps:
+                errors.append(
+                    f"{item.path} -> {item.target_heading} needs implementation steps"
+                )
+
+        directional_ids: set[str] = set()
+        if analysis_task.output and isinstance(
+            analysis_task.output.pydantic, AnalysisPacket
+        ):
+            directional_ids = {
+                assessment.assumption_id
+                for assessment in analysis_task.output.pydantic.assumption_assessments
+                if assessment.verdict
+                in {"strengthened", "weakened", "contradicted", "mixed"}
+            }
+        uncovered = directional_ids - covered_assumptions
+        if uncovered:
+            errors.append(
+                "Directional assumption assessments need implementation items: "
+                f"{sorted(uncovered)}"
+            )
+
+        if errors:
+            return False, "Repository mapping errors: " + "; ".join(errors)
+        return True, task_output
+
+    mapping_task = Task(
+        description=f"""Convert the audited evidence and assumption assessments
+into an actionable repository implementation plan.
+
+Repository context:
+{canon_json}
+
+Requirements:
+- Prefer files declared for the affected assumption before discovered related files.
+- Use only repository paths supplied above.
+- Copy target_heading exactly from that file's existing_headings list. Use the
+  closest existing heading as the insertion anchor when proposing a new subsection.
+- Cite the exact assumption IDs and audited source IDs that justify each plan item.
+- State whether evidence supports, challenges, qualifies, extends, or has no
+  material effect on the target content.
+- proposed_change must describe the actual content to add, remove, or qualify.
+  Generic language such as "update this file to reflect the evidence" is invalid.
+- implementation_steps must explain placement, cross-references, metadata or index
+  effects, and review order where relevant.
+- dependencies_or_conflicts must identify related canon claims, chronology,
+  terminology, or narrative consequences that a human reviewer should reconcile.
+- Give high priority only to strong, material contradictions or time-sensitive
+  updates. Use no-change/watch when the evidence is insufficient.
+- Cover every directional or mixed assumption assessment with at least one plan
+  item. Explain non-actionable assessments in coverage_notes.
+- Do not edit files and do not claim that any proposal has been accepted.""",
+        expected_output=(
+            "An ImplementationPacket containing exact file-and-heading edit plans "
+            "plus coverage notes for assumptions that do not warrant a change."
+        ),
+        agent=repository_mapper,
+        context=[audit_task, analysis_task],
+        output_pydantic=ImplementationPacket,
+        guardrail=implementation_guardrail,
+        guardrail_max_retries=2,
     )
     editor_task = Task(
         description=f"""Assemble the final structured ResearchBrief from the
@@ -313,9 +438,12 @@ Research window: {start_date.isoformat()} through {run_date.isoformat()}
 Requirements:
 - Preserve the auditor's exact source IDs and URLs.
 - Include the audited developments and every assumption assessment.
+- Preserve the repository mapper's implementation items without weakening their
+  file, heading, evidence, proposed-change, dependency, or priority detail.
+- Carry repository-mapper coverage notes into uncertainties when no edit is warranted.
 - Include contradictions and excluded-claim concerns in uncertainties.
 - Make the title and executive summary decision-useful, not promotional.
-- Use only these nearby canon paths for canon implications:
+- Use only these repository paths and headings for canon implications:
 {canon_json}
 - Do not modify canon or claim that the registry was updated.""",
         expected_output=(
@@ -323,7 +451,7 @@ Requirements:
             "validation and Markdown rendering."
         ),
         agent=canon_editor,
-        context=[audit_task, analysis_task],
+        context=[audit_task, analysis_task, mapping_task],
         output_pydantic=ResearchBrief,
     )
 
@@ -333,6 +461,7 @@ Requirements:
             counterevidence_scout,
             evidence_auditor,
             assumption_analyst,
+            repository_mapper,
             canon_editor,
         ],
         tasks=[
@@ -340,6 +469,7 @@ Requirements:
             counterevidence_task,
             audit_task,
             analysis_task,
+            mapping_task,
             editor_task,
         ],
         process=Process.sequential,
@@ -381,7 +511,7 @@ def run_crew_research(
         brief = ResearchBrief.model_validate(editor_task.output.pydantic)
     else:
         brief = ResearchBrief.model_validate_json(editor_task.output.raw)
-    validate_brief(brief, assumptions)
+    validate_brief(brief, assumptions, canon_matches)
     return brief
 
 
@@ -420,7 +550,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             assumptions,
             requested_ids=args.assumption,
         )
-        canon_matches = nearby_canon(topic, lane, load_canon_files(), limit=6)
+        canon_matches = select_canon_context(
+            topic,
+            lane,
+            load_canon_files(),
+            selected,
+        )
 
         if args.mock:
             brief = build_mock_brief(
@@ -431,6 +566,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 run_date,
                 args.lookback_days,
             )
+            validate_brief(brief, selected, canon_matches)
         else:
             brief = run_crew_research(
                 topic,
