@@ -1,5 +1,6 @@
 import os
 import glob
+import sys
 from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
@@ -11,8 +12,8 @@ def load_repo_text():
         try:
             with open(path, 'r', encoding='utf-8') as f:
                 texts[path] = f.read().lower()
-        except Exception:
-            pass
+        except OSError as exc:
+            print(f'Warning: could not read {path}: {exc}', file=sys.stderr)
     return texts
 
 
