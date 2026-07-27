@@ -8,7 +8,7 @@ and technology developments, tests them against the assumptions registry, and
 creates non-canonical briefs for human review.
 
 GitHub Actions starts one run each day. The crew is not a persistent background
-process: it starts, completes five bounded tasks, writes a review artifact, opens
+process: it starts, completes six bounded tasks, writes a review artifact, opens
 a pull request, and exits.
 
 ## Crew Roles
@@ -19,11 +19,15 @@ a pull request, and exits.
 3. **Evidence Auditor** deduplicates sources, reconciles conflicts, and removes
    unsupported claims.
 4. **Assumption Analyst** assesses every selected assumption and maps the
-   implications to nearby canon.
-5. **Canon Review Editor** assembles a structured brief without changing canon.
+   real-world and storyworld implications.
+5. **Repository Implementation Mapper** guarantees declared assumption files are
+   considered, then identifies exact files, existing heading anchors, evidence,
+   proposed edits, implementation steps, priorities, and canon conflicts.
+6. **Canon Review Editor** assembles a structured brief without changing canon.
 
 The process is sequential and uses typed task outputs. Deterministic Python
-validation runs after the crew and before any file is written.
+validation rejects unknown repository paths, invented headings, unselected
+assumptions, and unknown source IDs before any file is written.
 
 ## Running Locally
 
@@ -43,7 +47,8 @@ selection and formatting without CrewAI calls or API spend.
 Crew outputs always go to
 [`pending-review/agent-research/`](../pending-review/agent-research/). The crew
 may recommend strengthening, weakening, contradicting, debating, or monitoring
-an assumption, but it does not update the registry or canon.
+an assumption. Its implementation plan is a proposal for human review; it does
+not update the registry or canon.
 
 ```json
 {

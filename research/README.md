@@ -15,7 +15,7 @@ change, but only a human reviewer updates the registry or canon.
 ## Workflow
 
 1. Select an assumption, research lane, or open topic.
-2. Run the five-role daily crew with `postsingularity-crew`, or use
+2. Run the six-role daily crew with `postsingularity-crew`, or use
    `postsingularity-research` for a focused single-agent pass.
 3. Review the generated brief in
    [`pending-review/agent-research/`](../pending-review/agent-research/).

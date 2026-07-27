@@ -21,6 +21,8 @@ review.
   deployment, measured result, or prediction.
 - Reject unsupported certainty, invented URLs, and conclusions that outrun the
   evidence.
+- Verify that each implementation item points to a real file and exact existing
+  heading, and that its proposed edit is consistent with related canon.
 - Update [`research/assumptions.json`](../../research/assumptions.json) only
   after review.
 - Move accepted storyworld changes through the normal contribution workflow.

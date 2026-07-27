@@ -140,6 +140,8 @@ class CanonMatch:
     reason: str
     score: int
     excerpt: str
+    headings: tuple[str, ...] = ()
+    assumption_ids: tuple[str, ...] = ()
 
 
 class StrictModel(BaseModel):
@@ -192,8 +194,27 @@ class AssumptionAssessment(StrictModel):
 
 class CanonImplication(StrictModel):
     path: str
-    implication: str
+    target_heading: str = Field(
+        description="Exact existing Markdown heading used as the edit anchor"
+    )
+    assumption_ids: list[str] = Field(min_length=1)
+    source_ids: list[str] = Field(min_length=1)
+    relationship: Literal[
+        "supports",
+        "challenges",
+        "qualifies",
+        "extends",
+        "no-material-effect",
+    ]
     recommendation: Literal["monitor", "revise", "debate", "no-change"]
+    priority: Literal["high", "medium", "low", "watch"]
+    rationale: str = Field(min_length=20)
+    proposed_change: str = Field(
+        min_length=30,
+        description="Concrete content change or explicit reason to leave the file unchanged"
+    )
+    implementation_steps: list[str] = Field(min_length=1)
+    dependencies_or_conflicts: list[str]
 
 
 class ResearchBrief(StrictModel):
@@ -228,6 +249,14 @@ def extract_title(text: str, fallback: str) -> str:
     return match.group(1).strip() if match else fallback
 
 
+def extract_headings(text: str) -> tuple[str, ...]:
+    """Return Markdown headings without their leading hash marks."""
+    return tuple(
+        match.group(1).strip()
+        for match in re.finditer(r"^#{1,6}\s+(.+?)\s*$", text, re.MULTILINE)
+    )
+
+
 def tokenize(value: str) -> set[str]:
     return {
         token
@@ -236,9 +265,54 @@ def tokenize(value: str) -> set[str]:
     }
 
 
+def relevant_excerpt(
+    content: str,
+    query_tokens: set[str],
+    max_chars: int = 2200,
+) -> str:
+    """Select the most query-relevant Markdown sections for repository mapping."""
+    sections = [
+        section.strip()
+        for section in re.split(r"(?=^#{1,6}\s+)", content, flags=re.MULTILINE)
+        if section.strip()
+    ]
+    ranked: list[tuple[int, int, str]] = []
+    for index, section in enumerate(sections):
+        section_tokens = tokenize(section)
+        heading_match = re.match(r"^#{1,6}\s+(.+)$", section, re.MULTILINE)
+        heading_tokens = tokenize(heading_match.group(1)) if heading_match else set()
+        score = len(query_tokens & heading_tokens) * 5 + len(
+            query_tokens & section_tokens
+        )
+        ranked.append((score, -index, re.sub(r"\s+", " ", section).strip()))
+
+    ranked.sort(reverse=True)
+    selected: list[str] = []
+    total = 0
+    for _, _, section in ranked:
+        if selected and total + len(section) > max_chars:
+            continue
+        selected.append(section)
+        total += len(section)
+        if total >= max_chars or len(selected) >= 4:
+            break
+    return "\n\n".join(selected)[:max_chars]
+
+
 def load_canon_files(repo_root: Path = REPO_ROOT) -> list[CanonDocument]:
     """Load human-authored canon and narrative Markdown files."""
     documents: list[CanonDocument] = []
+    overview = repo_root / "README.md"
+    if overview.is_file():
+        text = overview.read_text(encoding="utf-8")
+        documents.append(
+            CanonDocument(
+                path="README.md",
+                title=extract_title(text, "PostSingularity"),
+                tags=parse_tags(text),
+                content=text,
+            )
+        )
     for root_name in CANON_ROOTS:
         root = repo_root / root_name
         if not root.exists():
@@ -290,7 +364,7 @@ def nearby_canon(
             reasons.append(f"content: {', '.join(content_hits[:4])}")
         if preferred:
             reasons.append(f"{lane} directory preference")
-        excerpt = re.sub(r"\s+", " ", document.content).strip()[:900]
+        excerpt = relevant_excerpt(document.content, query_tokens)
         ranked.append(
             CanonMatch(
                 path=document.path,
@@ -298,11 +372,78 @@ def nearby_canon(
                 reason="; ".join(reasons),
                 score=score,
                 excerpt=excerpt,
+                headings=extract_headings(document.content),
             )
         )
 
     ranked.sort(key=lambda item: (-item.score, item.path))
     return ranked[:limit]
+
+
+def select_canon_context(
+    topic: str,
+    lane: str,
+    documents: Sequence[CanonDocument],
+    assumptions: Sequence[dict[str, Any]],
+    limit: int = 12,
+) -> list[CanonMatch]:
+    """Combine declared assumption canon with discovered related repository files."""
+    documents_by_path = {document.path: document for document in documents}
+    assumption_ids_by_path: dict[str, list[str]] = {}
+    for assumption in assumptions:
+        for path in assumption["canon_sources"]:
+            assumption_ids_by_path.setdefault(path, []).append(assumption["id"])
+
+    declared: list[CanonMatch] = []
+    for path, assumption_ids in assumption_ids_by_path.items():
+        document = documents_by_path.get(path)
+        if document is None:
+            raise ValueError(f"Declared canon source was not loaded: {path}")
+        related_assumptions = [
+            assumption for assumption in assumptions if assumption["id"] in assumption_ids
+        ]
+        query_tokens = tokenize(
+            " ".join(
+                [
+                    topic,
+                    *[
+                        " ".join(
+                            [
+                                assumption["title"],
+                                assumption["claim"],
+                                " ".join(assumption["keywords"]),
+                            ]
+                        )
+                        for assumption in related_assumptions
+                    ],
+                ]
+            )
+        )
+        declared.append(
+            CanonMatch(
+                path=path,
+                title=document.title,
+                reason=(
+                    "declared canon source for " + ", ".join(sorted(assumption_ids))
+                ),
+                score=10_000,
+                excerpt=relevant_excerpt(document.content, query_tokens),
+                headings=extract_headings(document.content),
+                assumption_ids=tuple(sorted(assumption_ids)),
+            )
+        )
+
+    discovered = nearby_canon(topic, lane, documents, limit=limit)
+    selected = list(declared)
+    seen = {match.path for match in declared}
+    for match in discovered:
+        if match.path in seen:
+            continue
+        selected.append(match)
+        seen.add(match.path)
+        if len(selected) >= max(limit, len(declared)):
+            break
+    return selected
 
 
 def load_assumptions(path: Path = DEFAULT_ASSUMPTIONS_PATH) -> list[dict[str, Any]]:
@@ -425,6 +566,8 @@ def build_prompt(
             "path": match.path,
             "title": match.title,
             "why_nearby": match.reason,
+            "declared_for_assumptions": list(match.assumption_ids),
+            "existing_headings": list(match.headings),
             "excerpt": match.excerpt,
         }
         for match in canon_matches
@@ -443,7 +586,11 @@ Keep these boundaries:
   source must have the exact URL surfaced by web research.
 - Assess only the supplied assumption IDs. Use "insufficient-evidence" when the
   available evidence does not justify a directional verdict.
-- Recommend canon review but never claim to modify canon.
+- Turn canon review into an implementation plan: use only supplied repository
+  paths, anchor each proposal to an exact supplied heading, cite the assumption
+  and evidence IDs, and state concrete edit steps and conflicts.
+- Prefer each assumption's declared canon sources before adding discovered
+  related files. Never claim to modify canon.
 - Include contradictory evidence and meaningful uncertainty.
 - Return only data conforming to the provided structured-output schema."""
     user = f"""Research topic: {topic}
@@ -461,8 +608,9 @@ Nearby PostSingularity canon:
 {json.dumps(canon_payload, indent=2)}
 
 Produce a decision-useful research brief. Explain what changed, how strong the
-evidence is, which assumptions are strengthened or weakened, what implications
-follow for the storyworld, and what should be watched next."""
+evidence is, which assumptions are strengthened or weakened, and exactly where
+and how accepted evidence could be implemented in the repository. Generic
+instructions such as "revise this file" are insufficient."""
     return [
         {"role": "system", "content": system},
         {"role": "user", "content": user},
@@ -499,6 +647,7 @@ def extract_native_citations(response: Any) -> set[str]:
 def validate_brief(
     brief: ResearchBrief,
     selected_assumptions: Sequence[dict[str, Any]],
+    canon_matches: Sequence[CanonMatch] = (),
 ) -> None:
     source_ids = [source.id for source in brief.sources]
     if not source_ids:
@@ -521,6 +670,39 @@ def validate_brief(
             raise ValueError(
                 f"{assessment.assumption_id} cites unknown sources: {sorted(missing)}"
             )
+
+    allowed_canon = {match.path: match for match in canon_matches}
+    seen_targets: set[tuple[str, str]] = set()
+    for implication in brief.canon_implications:
+        if allowed_canon and implication.path not in allowed_canon:
+            raise ValueError(
+                f"Canon plan references a file outside supplied context: {implication.path}"
+            )
+        unknown_assumptions = set(implication.assumption_ids) - selected_ids
+        if unknown_assumptions:
+            raise ValueError(
+                "Canon plan references unselected assumptions: "
+                f"{sorted(unknown_assumptions)}"
+            )
+        missing_sources = set(implication.source_ids) - known_sources
+        if missing_sources:
+            raise ValueError(
+                f"Canon plan for {implication.path} cites unknown sources: "
+                f"{sorted(missing_sources)}"
+            )
+        if allowed_canon:
+            headings = {
+                heading.casefold() for heading in allowed_canon[implication.path].headings
+            }
+            if implication.target_heading.casefold() not in headings:
+                raise ValueError(
+                    f"Unknown target heading in {implication.path}: "
+                    f"{implication.target_heading}"
+                )
+        target = (implication.path, implication.target_heading.casefold())
+        if target in seen_targets:
+            raise ValueError(f"Duplicate canon implementation target: {target}")
+        seen_targets.add(target)
 
 
 def run_live_research(
@@ -558,7 +740,7 @@ def run_live_research(
     if response.output_parsed is None:
         raise RuntimeError("The model returned no parsed research brief")
     brief = response.output_parsed
-    validate_brief(brief, assumptions)
+    validate_brief(brief, assumptions, canon_matches)
     return brief, extract_native_citations(response)
 
 
@@ -572,7 +754,13 @@ def build_mock_brief(
 ) -> ResearchBrief:
     """Build deterministic synthetic data for formatting and workflow tests."""
     assumption = assumptions[0]
-    canon_path = canon_matches[0].path if canon_matches else assumption["canon_sources"][0]
+    canon_match = canon_matches[0] if canon_matches else None
+    canon_path = canon_match.path if canon_match else assumption["canon_sources"][0]
+    target_heading = (
+        canon_match.headings[0]
+        if canon_match and canon_match.headings
+        else "PostSingularity"
+    )
     return ResearchBrief(
         title=f"Mock research brief: {topic}",
         executive_summary=(
@@ -607,8 +795,23 @@ def build_mock_brief(
         canon_implications=[
             CanonImplication(
                 path=canon_path,
-                implication="The pipeline can map a report to nearby canon.",
+                target_heading=target_heading,
+                assumption_ids=[assumption["id"]],
+                source_ids=["S1"],
+                relationship="no-material-effect",
                 recommendation="no-change",
+                priority="watch",
+                rationale="Mock evidence cannot justify a repository change.",
+                proposed_change=(
+                    "Leave the target section unchanged until live evidence is reviewed."
+                ),
+                implementation_steps=[
+                    "Run a live source-grounded research pass.",
+                    "Reassess this exact section after human source verification.",
+                ],
+                dependencies_or_conflicts=[
+                    "Synthetic fixtures must never be treated as canon evidence."
+                ],
             )
         ],
         uncertainties=["All substantive content in this report is synthetic."],
@@ -706,15 +909,41 @@ def format_memo(
             ]
         )
 
-    lines.extend(["## Canon Mapping", ""])
+    lines.extend(["## Canon Implementation Plan", ""])
     if brief.canon_implications:
         for implication in brief.canon_implications:
+            assumptions = ", ".join(
+                f"`{assumption_id}`" for assumption_id in implication.assumption_ids
+            )
+            citations = ", ".join(
+                f"`{source_id}`" for source_id in implication.source_ids
+            )
             lines.extend(
                 [
-                    f"### `{implication.path}`",
+                    f"### `{implication.path}` -> {implication.target_heading}",
                     "",
+                    f"- Priority: **{implication.priority}**",
                     f"- Recommendation: **{implication.recommendation}**",
-                    f"- Implication: {implication.implication}",
+                    f"- Evidence relationship: **{implication.relationship}**",
+                    f"- Assumptions: {assumptions or 'None'}",
+                    f"- Sources: {citations or 'None'}",
+                    f"- Why this location: {implication.rationale}",
+                    f"- Proposed change: {implication.proposed_change}",
+                    "- Implementation steps:",
+                    *[
+                        f"  {index}. {step}"
+                        for index, step in enumerate(
+                            implication.implementation_steps, start=1
+                        )
+                    ],
+                    "- Dependencies or conflicts:",
+                    *(
+                        [
+                            f"  - {item}"
+                            for item in implication.dependencies_or_conflicts
+                        ]
+                        or ["  - None identified."]
+                    ),
                     "",
                 ]
             )
@@ -755,7 +984,9 @@ def format_memo(
             "- [ ] Confirm demonstrations are not described as deployments.",
             "- [ ] Check for contradictory evidence and missing primary sources.",
             "- [ ] Accept, revise, or reject each proposed assumption verdict.",
-            "- [ ] Decide whether any canon change should enter the contribution workflow.",
+            "- [ ] Verify every target file and heading still exists.",
+            "- [ ] Accept, revise, or reject each proposed repository edit.",
+            "- [ ] Move accepted changes through the normal contribution workflow.",
             "",
             "```json",
             json.dumps(
@@ -889,7 +1120,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             assumptions,
             requested_ids=args.assumption,
         )
-        canon_matches = nearby_canon(topic, lane, load_canon_files(), limit=6)
+        canon_matches = select_canon_context(
+            topic,
+            lane,
+            load_canon_files(),
+            selected,
+        )
 
         if args.mock:
             brief = build_mock_brief(
@@ -900,6 +1136,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 run_date,
                 args.lookback_days,
             )
+            validate_brief(brief, selected, canon_matches)
             native_citations: set[str] = set()
         else:
             brief, native_citations = run_live_research(
