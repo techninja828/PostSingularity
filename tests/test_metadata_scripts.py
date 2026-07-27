@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from tools import markdown_utils
 from tools.scripts import check_cohesion, validate_metadata
 
@@ -42,5 +44,20 @@ def test_shared_markdown_parsers_extract_tags_and_json_blocks() -> None:
     assert markdown_utils.first_json_block(text) == {"id": "one"}
 
 
-def test_read_text_returns_none_for_missing_file(tmp_path: Path) -> None:
-    assert markdown_utils.read_text(str(tmp_path / "absent.md")) is None
+def test_read_text_raises_for_missing_file(tmp_path: Path) -> None:
+    with pytest.raises(OSError):
+        markdown_utils.read_text(str(tmp_path / "absent.md"))
+
+
+def test_json_block_helpers_warn_only_with_a_source(capsys) -> None:
+    text = "```json\n{bad}\n```\n"
+
+    assert markdown_utils.extract_json_blocks(text) == []
+    assert markdown_utils.first_json_block(text) is None
+    assert capsys.readouterr().err == ""
+
+    assert markdown_utils.extract_json_blocks(text, source="doc.md") == []
+    assert markdown_utils.first_json_block(text, source="doc.md") is None
+    err = capsys.readouterr().err
+    assert "skipping malformed JSON metadata block in doc.md" in err
+    assert "malformed JSON metadata in doc.md" in err

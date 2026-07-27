@@ -31,10 +31,7 @@ LINK_RE = re.compile(r'href="([^"]+\.md)"')
 
 def extract_metadata(md_path):
     """Return metadata dict from a markdown file or None."""
-    text = read_text(md_path)
-    if text is None:
-        return None
-    return first_json_block(text)
+    return first_json_block(read_text(md_path), source=md_path)
 
 
 def character_links_md(metadata):
@@ -76,12 +73,12 @@ def default_title(md_path):
 
 
 def convert_file(md_path, output_path):
-    render_page(read_text(md_path) or '', output_path, default_title(md_path))
+    render_page(read_text(md_path), output_path, default_title(md_path))
 
 
 def convert_character_index(md_path, output_path, metadata):
     """Convert characters/index.md inserting generated links."""
-    text = read_text(md_path) or ''
+    text = read_text(md_path)
 
     # Replace manual bullet list after the heading
     text = re.sub(r'(###\s*Character Links\n)(?:\s*\n)?(?:\s*-.*\n)+',

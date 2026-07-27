@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import sys
 from typing import Any
 
 EXCLUDED_DIRS = {".git", ".venv", ".pytest_cache", "__pycache__", "node_modules"}
@@ -28,13 +29,10 @@ def collect_markdown_files(root: str) -> list[str]:
     return files
 
 
-def read_text(path: str) -> str | None:
-    """Return file contents, or None when the file cannot be read."""
-    try:
-        with open(path, "r", encoding="utf-8") as handle:
-            return handle.read()
-    except OSError:
-        return None
+def read_text(path: str) -> str:
+    """Return the file's contents; raises OSError when it cannot be read."""
+    with open(path, "r", encoding="utf-8") as handle:
+        return handle.read()
 
 
 def has_tag_line(text: str) -> bool:
@@ -53,21 +51,35 @@ def parse_tags(text: str) -> tuple[str, ...]:
     return tuple(tag.strip().lower() for tag in TAG_VALUE_RE.findall(match.group(1)))
 
 
-def extract_json_blocks(text: str) -> list[dict[str, Any]]:
-    """Return every parseable ```json metadata block in ``text``."""
+def extract_json_blocks(text: str, source: str | None = None) -> list[dict[str, Any]]:
+    """Return every parseable ```json metadata block, warning about the rest."""
     blocks: list[dict[str, Any]] = []
     for raw in JSON_BLOCK_RE.findall(text):
         try:
             blocks.append(json.loads(raw))
-        except json.JSONDecodeError:
-            continue
+        except json.JSONDecodeError as exc:
+            if source is not None:
+                print(
+                    f"Warning: skipping malformed JSON metadata block in {source}: {exc}",
+                    file=sys.stderr,
+                )
     return blocks
 
 
-def first_json_block(text: str) -> dict[str, Any] | None:
-    """Return the first parseable ```json metadata block, or None."""
-    blocks = extract_json_blocks(text)
-    return blocks[0] if blocks else None
+def first_json_block(text: str, source: str | None = None) -> dict[str, Any] | None:
+    """Return the first ```json metadata block, or None when absent or malformed."""
+    match = JSON_BLOCK_RE.search(text)
+    if not match:
+        return None
+    try:
+        return json.loads(match.group(1))
+    except json.JSONDecodeError as exc:
+        if source is not None:
+            print(
+                f"Warning: malformed JSON metadata in {source}: {exc}",
+                file=sys.stderr,
+            )
+        return None
 
 
 def extract_title(text: str, fallback: str) -> str:

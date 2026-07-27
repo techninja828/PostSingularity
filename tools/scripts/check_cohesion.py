@@ -39,15 +39,22 @@ __all__ = ["EXCLUDED_DIRS", "collect_markdown_files", "extract_metadata", "load_
 
 
 def extract_metadata(path: str) -> List[Dict]:
-    text = read_text(path)
-    if text is None:
+    try:
+        text = read_text(path)
+    except OSError as exc:
+        print(f"Warning: could not read {path}: {exc}", file=sys.stderr)
         return []
-    return extract_json_blocks(text)
+    return extract_json_blocks(text, source=path)
 
 
 def load_cycles(timeline_path: str) -> List[int]:
-    text = read_text(timeline_path)
-    if text is None:
+    try:
+        text = read_text(timeline_path)
+    except OSError as exc:
+        print(
+            f"Warning: could not read timeline {timeline_path}: {exc}",
+            file=sys.stderr,
+        )
         return []
     return [int(m) for m in CYCLE_REGEX.findall(text)]
 
@@ -57,7 +64,12 @@ def main() -> None:
     md_files = collect_markdown_files(root)
 
     characters_dir = os.path.join(root, "characters")
-    char_files = {os.path.splitext(f)[0].lower() for f in os.listdir(characters_dir) if f.endswith(".md")}
+    try:
+        char_entries = os.listdir(characters_dir)
+    except OSError as exc:
+        print(f"Error: could not list characters directory {characters_dir}: {exc}", file=sys.stderr)
+        sys.exit(1)
+    char_files = {os.path.splitext(f)[0].lower() for f in char_entries if f.endswith(".md")}
 
     cycles = load_cycles(os.path.join(root, "worldbible", "timeline.md"))
 

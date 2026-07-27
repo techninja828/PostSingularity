@@ -45,11 +45,15 @@ def has_required_metadata(text: str) -> bool:
     return has_tag_line(text) and has_json_block(text)
 
 
+class MetadataCheckError(Exception):
+    """Raised when a file cannot be read for metadata validation."""
+
+
 def check_file(path: str) -> bool:
-    content = read_text(path)
-    if content is None:
-        print(f"Error reading {path}")
-        return False
+    try:
+        content = read_text(path)
+    except OSError as e:
+        raise MetadataCheckError(f"Error reading {path}: {e}") from e
     return has_required_metadata(content)
 
 
@@ -57,15 +61,27 @@ def main():
     root = sys.argv[1] if len(sys.argv) > 1 else '.'
     md_files = collect_markdown_files(root)
 
-    missing = [f for f in md_files if not check_file(f)]
+    missing = []
+    errors = []
+    for f in md_files:
+        try:
+            if not check_file(f):
+                missing.append(f)
+        except MetadataCheckError as exc:
+            errors.append(str(exc))
+
+    for message in errors:
+        print(message, file=sys.stderr)
 
     if missing:
         print("Files missing required Tags line and JSON metadata block:")
         for f in missing:
             print(f"- {f}")
+
+    if missing or errors:
         sys.exit(1)
-    else:
-        print("All markdown files contain both Tags line and JSON metadata block.")
+
+    print("All markdown files contain both Tags line and JSON metadata block.")
 
 
 if __name__ == '__main__':
