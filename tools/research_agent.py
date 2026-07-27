@@ -481,10 +481,15 @@ def infer_lane(topic: str, assumptions: Sequence[dict[str, Any]]) -> str:
 
 
 def scheduled_topic(run_date: date, requested_lane: str = "auto") -> tuple[str, str]:
-    """Choose a deterministic weekly lane and topic."""
+    """Choose a deterministic daily lane and topic.
+
+    The crew runs daily, so the lane rotates per day (by ordinal date) rather
+    than per ISO week. This cycles evenly through every lane instead of
+    researching the same lane on all seven days of a week.
+    """
     if requested_lane == "auto":
         lane_names = list(LANES)
-        lane = lane_names[run_date.isocalendar().week % len(lane_names)]
+        lane = lane_names[run_date.toordinal() % len(lane_names)]
     else:
         lane = requested_lane
     return lane, LANES[lane]["topic"]
