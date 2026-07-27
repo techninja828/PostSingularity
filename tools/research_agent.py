@@ -1048,11 +1048,17 @@ def append_submission_log(
         f"| 0 | research agent | [{report_path.name}]({relative_path}) | pending | "
         f"{topic.replace('|', '/')} |"
     )
-    marker = "\nPlease append new rows"
-    if marker not in text:
-        raise ValueError(f"Could not find insertion point in {submissions_log}")
-    text = text.replace(marker, f"\n{row}\n{marker}", 1)
-    submissions_log.write_text(text, encoding="utf-8")
+    lines = text.splitlines()
+    table_indices = [
+        index for index, line in enumerate(lines) if line.lstrip().startswith("|")
+    ]
+    if not table_indices:
+        raise ValueError(f"Could not find a table to append to in {submissions_log}")
+    lines.insert(table_indices[-1] + 1, row)
+    new_text = "\n".join(lines)
+    if text.endswith("\n"):
+        new_text += "\n"
+    submissions_log.write_text(new_text, encoding="utf-8")
     return True
 
 
