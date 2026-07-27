@@ -153,3 +153,14 @@ def test_github_workflow_runs_daily() -> None:
     assert "tools.research_crew" in workflow
     assert "requirements-research-crew.txt" in workflow
     assert "OPENAI_API_KEY is not configured" in workflow
+
+
+def test_workflow_pr_creation_is_resilient() -> None:
+    workflow = (
+        Path(__file__).parents[1] / ".github" / "workflows" / "research-agent.yml"
+    ).read_text(encoding="utf-8")
+    # Detects untracked brief files, tolerates a blocked PR creation, and
+    # supports an optional PAT so the daily run is never lost.
+    assert "git diff --cached --quiet" in workflow
+    assert "if ! gh pr create" in workflow
+    assert "RESEARCH_PR_TOKEN" in workflow

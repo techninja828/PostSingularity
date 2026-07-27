@@ -102,24 +102,32 @@ jobs:
       - name: Open daily research review pull request
         if: steps.config.outputs.enabled == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.RESEARCH_PR_TOKEN || github.token }}
         shell: bash
         run: |
-          if git diff --quiet; then
+          run_date="$(date -u +%Y-%m-%d)"
+          git config user.name "postsingularity-research[bot]"
+          git config user.email "postsingularity-research[bot]@users.noreply.github.com"
+
+          # Stage first so newly created (untracked) brief files are detected;
+          # `git diff` alone only sees tracked changes.
+          git add pending-review/agent-research submissions-log.md
+          if git diff --cached --quiet; then
             echo "No research changes were generated."
             exit 0
           fi
 
-          run_date="$(date -u +%Y-%m-%d)"
           branch="research-crew/${run_date}-${GITHUB_RUN_ID}"
-          git config user.name "postsingularity-research[bot]"
-          git config user.email "postsingularity-research[bot]@users.noreply.github.com"
           git checkout -b "$branch"
-          git add pending-review/agent-research submissions-log.md
           git commit -m "Add ${run_date} research crew brief"
           git push origin "$branch"
-          gh pr create \
+
+          # Don't fail the job if PR creation is blocked: the branch is already
+          # pushed, so a human (or the RESEARCH_PR_TOKEN PAT) can open the PR.
+          if ! gh pr create \
             --base main \
             --head "$branch" \
             --title "Review PostSingularity research brief - ${run_date}" \
-            --body "Daily, non-canonical CrewAI research for human source verification and assumption review. Canon and the assumption registry were not modified."
+            --body "Daily, non-canonical CrewAI research for human source verification and assumption review. Canon and the assumption registry were not modified."; then
+            echo "::warning::Could not open the pull request automatically. This usually means GitHub Actions is not allowed to create pull requests (Settings > Actions > General > Workflow permissions) or the token lacks 'pull-requests: write'. Branch '${branch}' was pushed; open the PR manually, or add a RESEARCH_PR_TOKEN secret (a PAT with repo/pull-request scope) to enable automatic creation."
+          fi
