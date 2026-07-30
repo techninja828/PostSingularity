@@ -8,6 +8,7 @@ This file tracks contributions, particularly those placed in `pending-review/`.
 | 0 | repo setup | pending-review folder | accepted | initial structure |
 | 0 | research agent | [2026-07-27-social-systems-automation-future-of-work-meaning-digital-resistance-and-social-.md](pending-review/agent-research/2026-07-27-social-systems-automation-future-of-work-meaning-digital-resistance-and-social-.md) | pending | automation, future of work, meaning, digital resistance, and social adaptation |
 | 0 | research agent | [2026-07-27-ai-ai-capabilities-agents-alignment-evaluation-and-research-automat.md](pending-review/agent-research/2026-07-27-ai-ai-capabilities-agents-alignment-evaluation-and-research-automat.md) | pending | AI capabilities, agents, alignment, evaluation, and research automation |
+| 0 | research agent | [2026-07-30-biotechnology-biofabrication-synthetic-biology-cellular-agriculture-and-human-.md](pending-review/agent-research/2026-07-30-biotechnology-biofabrication-synthetic-biology-cellular-agriculture-and-human-.md) | pending | biofabrication, synthetic biology, cellular agriculture, and human enhancement |
 
 Please append new rows when submitting or revising ideas. Use cycle numbering consistent with other metadata files.
 
