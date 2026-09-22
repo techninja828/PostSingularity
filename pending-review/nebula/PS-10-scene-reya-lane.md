@@ -1,4 +1,5 @@
 # PS-10 — Wider Cut on the Map
+Tags: [draft], [scene], [oceanic-bloom], [reya], [arin], [council]
 
 Date: 2026-09-22  
 Form: Short production-ready scene  
