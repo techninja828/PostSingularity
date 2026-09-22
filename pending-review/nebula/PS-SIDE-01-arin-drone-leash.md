@@ -1,4 +1,5 @@
 # PS-SIDE-01 — Short Leash (Arin)
+Tags: [draft], [vignette], [arin], [drones], [culture]
 
 Date: 2026-09-22  
 Track: **B** (independent of PS-09/10 council/fisher outcomes)  
