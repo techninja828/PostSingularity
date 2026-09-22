@@ -1,4 +1,5 @@
 # PS-SIDE-03 — Soft Rent (Bloom folk term)
+Tags: [draft], [glossary], [oceanic-bloom], [folk-term], [nursery]
 
 Date: 2026-09-22  
 Track: **D** (independent of PS-09/10 and of PRs #112/#113/#114)  
