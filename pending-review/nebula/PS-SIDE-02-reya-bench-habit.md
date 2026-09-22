@@ -1,4 +1,5 @@
 # PS-SIDE-02 — Gloves First (Reya)
+Tags: [draft], [vignette], [reya], [habit], [engineering]
 
 Date: 2026-09-22  
 Track: **C** (independent of PS-09/10 and of PRs #112/#113 outcomes)  
